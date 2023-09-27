@@ -1,0 +1,18 @@
+﻿﻿@using Microsoft.AspNetCore.Identity;
+@using PersonalSoulBlog.Models.Entities;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<ul class="righ-align">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <l>Привет, @User.Identity.Name!</l>
+        <form method="post" asp-controller="Account" asp-action="Logout">
+            <input class="enter_submit" type="submit" value="Выход" />
+        </form>
+    }
+    else
+    {
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
+    }    
+</ul>
