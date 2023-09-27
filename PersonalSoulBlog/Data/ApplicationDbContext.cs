@@ -18,13 +18,6 @@ namespace PersonalSoulBlog.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            // Создание и инициализация ролей
-            builder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Name = "Пользователь", NormalizedName = "ПОЛЬЗОВАТЕЛЬ" },
-                new IdentityRole { Name = "Администратор", NormalizedName = "АДМИНИСТРАТОР" },
-                new IdentityRole { Name = "Модератор", NormalizedName = "МОДЕРАТОР" }
-            );
         }
     }
 }

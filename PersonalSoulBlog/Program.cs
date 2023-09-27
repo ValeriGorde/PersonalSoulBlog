@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PersonalSoulBlog.Data;
+using PersonalSoulBlog.Data.DefaultData;
 using PersonalSoulBlog.Models;
 using PersonalSoulBlog.Models.Entities;
 using PersonalSoulBlog.Services.Mapping;
@@ -33,9 +34,17 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
     opts.Password.RequireLowercase = false;
     opts.Password.RequireUppercase = false;
     opts.Password.RequireDigit = false;
-}).AddEntityFrameworkStores<ApplicationDbContext>();
+}).AddRoles<IdentityRole>()
+.AddRoleManager<RoleManager<IdentityRole>>()
+.AddDefaultTokenProviders()
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
+
+// Добавление пользователей и ролей по умолчанию в БД
+var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+await SeedData.EnsureSeedData(scope.ServiceProvider);
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
