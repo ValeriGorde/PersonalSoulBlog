@@ -11,13 +11,13 @@ namespace PersonalSoulBlog.Data.DefaultData
     {
         public static async Task EnsureSeedData(IServiceProvider provider)
         {
-            var roleMgr = provider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleMgr = provider.GetRequiredService<RoleManager<Role>>();
             foreach (var roleName in RoleNames.AllRoles)
             {
                 var role = roleMgr.FindByNameAsync(roleName).Result;
                 if (role == null)
                 {
-                    var result = roleMgr.CreateAsync(new IdentityRole { Name = roleName }).Result;
+                    var result = roleMgr.CreateAsync(new Role { Name = roleName }).Result;
                     if (!result.Succeeded)
                     {
                         throw new Exception(result.Errors.First().Description);

@@ -27,15 +27,15 @@ IMapper mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 // Добавление сервисов Identity
-builder.Services.AddIdentity<User, IdentityRole>(opts =>
+builder.Services.AddIdentity<User, Role>(opts =>
 {
     opts.Password.RequiredLength = 5;
     opts.Password.RequireNonAlphanumeric = false;
     opts.Password.RequireLowercase = false;
     opts.Password.RequireUppercase = false;
     opts.Password.RequireDigit = false;
-}).AddRoles<IdentityRole>()
-.AddRoleManager<RoleManager<IdentityRole>>()
+}).AddRoles<Role>()
+.AddRoleManager<RoleManager<Role>>()
 .AddDefaultTokenProviders()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 

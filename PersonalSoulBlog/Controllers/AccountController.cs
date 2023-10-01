@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using PersonalSoulBlog.Models.Entities;
-using PersonalSoulBlog.ViewModels;
+using PersonalSoulBlog.ViewModels.Account;
 
 namespace PersonalSoulBlog.Controllers
 {
@@ -38,6 +38,7 @@ namespace PersonalSoulBlog.Controllers
 
             // добавляем пользователя
             var result = await _userManager.CreateAsync(user, model.Password);
+            // присваиваем по умолчанию роль - пользователь
             await _userManager.AddToRoleAsync(user, "Пользователь");
 
             if (result.Succeeded)

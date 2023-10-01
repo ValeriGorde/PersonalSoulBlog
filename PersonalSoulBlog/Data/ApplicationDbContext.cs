@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 
 namespace PersonalSoulBlog.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<User, Role, string>
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {

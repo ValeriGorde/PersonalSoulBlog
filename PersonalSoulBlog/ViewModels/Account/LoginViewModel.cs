@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PersonalSoulBlog.ViewModels
+namespace PersonalSoulBlog.ViewModels.Account
 {
     public class LoginViewModel
     {
@@ -16,6 +16,6 @@ namespace PersonalSoulBlog.ViewModels
         [Display(Name = "Запомнить?")]
         public bool RememberMe { get; set; }
 
-        public string? ReturnUrl { get; set; } 
+        public string? ReturnUrl { get; set; }
     }
 }

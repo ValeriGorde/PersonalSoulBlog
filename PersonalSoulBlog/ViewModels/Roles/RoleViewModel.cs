@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace PersonalSoulBlog.ViewModels
+namespace PersonalSoulBlog.ViewModels.Roles
 {
     // Модель для управления ролями
     public class RoleViewModel

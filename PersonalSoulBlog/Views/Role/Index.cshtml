@@ -1,0 +1,56 @@
+﻿@model IEnumerable<PersonalSoulBlog.Models.Entities.Role>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="conteiner p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Список ролей</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Role" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Создать новую роль
+            </a>
+        </div>
+    </div>
+    <br /> <br />
+
+</div>
+
+<table class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Описание
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obj in Model)
+        {
+            <tr>
+                <td width="50%">
+                    @obj.Name
+                </td>
+                <td width="30%">
+                    @obj.Description
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Role" asp-action="Edit" asp-route-id="@obj.Id"
+                           class="btn btn-primary">
+                            <i class="bi bi-pencil"></i>Редактировать
+                        </a>
+                        <form asp-controller="Role" asp-action="Delete" method="post" asp-route-id="@obj.Id">
+                            <input type="submit"  value="Удалить" />
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
