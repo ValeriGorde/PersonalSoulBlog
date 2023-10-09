@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PersonalSoulBlog.Models.Entities;
+using PersonalSoulBlog.DAL.Models.Entities;
 
-namespace PersonalSoulBlog.Data.DefaultData
+namespace PersonalSoulBlog.DAL.Data.DefaultData
 {
     /// <summary>
     /// Пользователи по умолчанию

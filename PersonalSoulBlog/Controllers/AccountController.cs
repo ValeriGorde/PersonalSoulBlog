@@ -2,22 +2,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using PersonalSoulBlog.Models.Entities;
+using PersonalSoulBlog.DAL.Models.Entities;
+using PersonalSoulBlog.Services.ControllersServices.Interfaces;
 using PersonalSoulBlog.ViewModels.Account;
 
 namespace PersonalSoulBlog.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly IAccountService _accountService;
 
-        public AccountController(IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(IAccountService accountService)
         {
-            _mapper = mapper;
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _accountService = accountService;
         }
 
         [HttpGet]
@@ -34,23 +31,17 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = _mapper.Map<User>(model);
-
-            // добавляем пользователя
-            var result = await _userManager.CreateAsync(user, model.Password);
-            // присваиваем по умолчанию роль - пользователь
-            await _userManager.AddToRoleAsync(user, "Пользователь");
-
-            if (result.Succeeded)
+            var result = await _accountService.Register(model);
+            if (result.Success)
             {
-                // установка куки 
-                await _signInManager.SignInAsync(user, false);
                 return RedirectToAction("Login");
             }
             else
             {
-                foreach (var error in result.Errors)
-                    ModelState.AddModelError(string.Empty, error.Description);
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
             }
 
             return View(model);
@@ -74,19 +65,14 @@ namespace PersonalSoulBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                var returnUrl = Url.Action("Index", "Home"); ;
+                var result = await _accountService.Login(model, returnUrl);
+                if (result.Success)
                 {
-                    // проверка на то, принадлежит ли url приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                        return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
-                    ModelState.AddModelError("", "Неправильный логин и(или) пароль.");
+                    ModelState.AddModelError("", result.ErrorMessage);
             }
             return View(model);
         }
@@ -100,8 +86,7 @@ namespace PersonalSoulBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // удаление аутентификационных куки
-            await _signInManager.SignOutAsync();
+            await _accountService.Logout();
             return RedirectToAction("Index", "Home");   
         }
 

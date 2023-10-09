@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace PersonalSoulBlog.Models.Entities
+namespace PersonalSoulBlog.DAL.Models.Entities
 {
     public class Role: IdentityRole
     {

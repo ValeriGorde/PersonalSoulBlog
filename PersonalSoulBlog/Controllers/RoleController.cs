@@ -2,23 +2,21 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PersonalSoulBlog.Models.Entities;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using PersonalSoulBlog.DAL.Models.Entities;
+using PersonalSoulBlog.Services.ControllersServices.Interfaces;
 using PersonalSoulBlog.ViewModels.Roles;
 
 namespace PersonalSoulBlog.Controllers
 {
-    [Authorize(Roles = "Администратор")]
+    //[Authorize(Roles = "Администратор")]
     public class RoleController : Controller
     {
-        private readonly IMapper _mapper;
-        private readonly RoleManager<Role> _roleManager;
-        private readonly UserManager<User> _userManager;
+        private readonly IRoleService _roleService;
 
-        public RoleController(IMapper mapper, RoleManager<Role> roleManager, UserManager<User> userManager)
+        public RoleController(IRoleService roleService)
         {
-            _mapper = mapper;
-            _roleManager = roleManager;
-            _userManager = userManager;
+            _roleService = roleService;
         }
 
 
@@ -29,7 +27,9 @@ namespace PersonalSoulBlog.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_roleManager.Roles.ToList());
+            var rolesList = _roleService.GetAllRoles();
+
+            return View(rolesList);
         }
 
 
@@ -53,18 +53,13 @@ namespace PersonalSoulBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = _mapper.Map<Role>(model);
-                var result = await _roleManager.CreateAsync(role);
-
-                if (result.Succeeded)
+                var result = await _roleService.CreateRole(model);
+                if (result)
                 {
                     return RedirectToAction("Index");
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-            }
+            }            
+
             return View(model);
         }
 
@@ -75,19 +70,14 @@ namespace PersonalSoulBlog.Controllers
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Edit(string? id)
-        {
-            if (id == string.Empty || id == null)
+        {            
+            var role = await _roleService.GetRoleById(id);
+            if (role != null)
             {
-                return NotFound();
+                return View(role);
             }
 
-            var role = await _roleManager.FindByIdAsync(id);
-            if(role != null)
-            {
-                var newRole = _mapper.Map<EditRoleViewModel>(role);
-                return View(newRole);
-            }
-            return RedirectToAction("Index");   
+            return RedirectToAction("Index");            
         }
 
 
@@ -100,23 +90,12 @@ namespace PersonalSoulBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var role = await _roleManager.FindByIdAsync(model.Id);
-                if(role != null)
+                var result = await _roleService.EditRole(model);
+                if (result)
                 {
-                    var newRole = _mapper.Map<Role>(model);
-
-                    role.Name = newRole.Name;
-                    role.Description = newRole.Description;
-
-                    var result = await _roleManager.UpdateAsync(role);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    else
-                        ModelState.AddModelError("", "Ошибка");
-                }            
-            }
+                    return RedirectToAction("Index");
+                }
+            }     
 
             return View(model);
         }
@@ -129,12 +108,7 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            var role = await _roleManager.FindByIdAsync(id);
-
-            if (role != null)
-            {
-                await _roleManager.DeleteAsync(role);
-            }
+            await _roleService.DeleteRole(id);
             return RedirectToAction("Index");
         }
     }

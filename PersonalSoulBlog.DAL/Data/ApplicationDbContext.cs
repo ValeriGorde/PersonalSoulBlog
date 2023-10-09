@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PersonalSoulBlog.Models.Entities;
+using PersonalSoulBlog.DAL.Models.Entities;
 using System.Reflection.Emit;
 
-namespace PersonalSoulBlog.Data
+namespace PersonalSoulBlog.DAL.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User, Role, string>
     {

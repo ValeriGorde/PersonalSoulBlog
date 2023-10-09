@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace PersonalSoulBlog.Data.Migrations
+namespace PersonalSoulBlog.DAL.Data.Migrations
 {
     public partial class AddRoleTableMigration : Migration
     {

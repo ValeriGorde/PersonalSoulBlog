@@ -1,4 +1,4 @@
-namespace PersonalSoulBlog.Models
+namespace PersonalSoulBlog.DAL.Models
 {
     public class ErrorViewModel
     {

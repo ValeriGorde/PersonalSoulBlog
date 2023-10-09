@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PersonalSoulBlog.Data.Migrations
+namespace PersonalSoulBlog.DAL.Data.Migrations
 {
     public partial class InitialMigration : Migration
     {

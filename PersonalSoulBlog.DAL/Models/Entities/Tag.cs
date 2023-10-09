@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PersonalSoulBlog.Models.Entities
+namespace PersonalSoulBlog.DAL.Models.Entities
 {
     // Модель тега
     public class Tag : BaseModel

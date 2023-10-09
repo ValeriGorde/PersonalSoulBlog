@@ -1,4 +1,4 @@
-﻿namespace PersonalSoulBlog.Data.DefaultData
+﻿namespace PersonalSoulBlog.DAL.Data.DefaultData
 {
     /// <summary>
     /// Роли по умолчанию

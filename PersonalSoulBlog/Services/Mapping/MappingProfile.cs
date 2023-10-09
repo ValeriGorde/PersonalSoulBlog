@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using PersonalSoulBlog.Models.Entities;
+using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.ViewModels.Account;
 using PersonalSoulBlog.ViewModels.Roles;
 

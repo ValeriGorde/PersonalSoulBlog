@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using PersonalSoulBlog.Models.Entities;
+using Microsoft.Extensions.DependencyInjection;
+using PersonalSoulBlog.DAL.Models.Entities;
 
-namespace PersonalSoulBlog.Data.DefaultData
+namespace PersonalSoulBlog.DAL.Data.DefaultData
 {
     /// <summary>
     /// Класс для создания ролей и пользователей по умолчанию

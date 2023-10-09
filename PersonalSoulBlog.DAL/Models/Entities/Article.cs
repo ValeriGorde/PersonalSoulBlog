@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PersonalSoulBlog.Models.Entities
+namespace PersonalSoulBlog.DAL.Models.Entities
 {
     // Модель статьи
     public class Article : BaseModel

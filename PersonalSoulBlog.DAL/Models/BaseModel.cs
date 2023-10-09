@@ -1,4 +1,4 @@
-﻿namespace PersonalSoulBlog.Models
+﻿namespace PersonalSoulBlog.DAL.Models
 {
     // Базовая модель
     public class BaseModel

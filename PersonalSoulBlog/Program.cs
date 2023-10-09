@@ -1,11 +1,13 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PersonalSoulBlog.Data;
-using PersonalSoulBlog.Data.DefaultData;
-using PersonalSoulBlog.Models;
-using PersonalSoulBlog.Models.Entities;
+using PersonalSoulBlog.DAL.Data;
+using PersonalSoulBlog.DAL.Data.DefaultData;
+using PersonalSoulBlog.DAL.Models.Entities;
+using PersonalSoulBlog.Services.ControllersServices;
+using PersonalSoulBlog.Services.ControllersServices.Interfaces;
 using PersonalSoulBlog.Services.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,10 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+// Подключаем сервисы
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 // Подключаем маппинг
 var mappingConfig = new MapperConfiguration(mc =>
