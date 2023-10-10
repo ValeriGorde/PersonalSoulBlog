@@ -1,0 +1,17 @@
+﻿@model PersonalSoulBlog.ViewModels.User.CreateUserViewModel
+
+<h2>Добавление пользователя</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary(true, "")
+        <p>Название:  @Html.EditorFor(model => model.FirstName)</p>
+        <p>Название:  @Html.EditorFor(model => model.LastName)</p>
+        <p>Название:  @Html.EditorFor(model => model.Email)</p>
+        <p>Название:  @Html.EditorFor(model => model.Password)</p>
+        <p><input type="submit" value="Добавить" /></p>
+    </div>
+}
