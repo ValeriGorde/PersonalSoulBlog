@@ -1,8 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using PersonalSoulBlog.DAL.Data;
 using PersonalSoulBlog.DAL.Data.DefaultData;
 using PersonalSoulBlog.DAL.Models.Entities;
@@ -24,6 +22,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITagService, TagService>();
 
 // Подключаем маппинг
 var mappingConfig = new MapperConfiguration(mc =>

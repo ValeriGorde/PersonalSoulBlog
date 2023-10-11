@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using PersonalSoulBlog.DAL.Models.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using PersonalSoulBlog.Services.ControllersServices.Interfaces;
 using PersonalSoulBlog.ViewModels.Roles;
 

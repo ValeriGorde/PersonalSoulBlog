@@ -54,6 +54,7 @@ namespace PersonalSoulBlog.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public async Task<IActionResult> Edit(string? id)
         {
             var user = await _userService.GetUserById(id);
@@ -64,12 +65,13 @@ namespace PersonalSoulBlog.Controllers
 
             return RedirectToAction("Index");            
         }
-        
+
         /// <summary>
         /// Метод для редактирования пользователя
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<IActionResult> Edit(EditUserViewModel model)
         {
             if (ModelState.IsValid)
@@ -90,6 +92,7 @@ namespace PersonalSoulBlog.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<IActionResult> Delete(string? id)
         {
             await _userService.DeleteUser(id);

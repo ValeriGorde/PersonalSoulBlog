@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.Role>
+﻿@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.Tag>
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,8 +7,8 @@
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">Список ролей</h2>
-            <a asp-controller="Role" asp-action="Create">
-                <i class="bi bi-plus-circle"></i> &nbsp; Создать новую роль
+            <a asp-controller="Tag" asp-action="Create">
+                <i class="bi bi-plus-circle"></i> &nbsp; Создать новый тэг
             </a>
         </div>
     </div>
@@ -24,13 +24,13 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text">@item.Description</p>
+                        <p class="card-text">Статей по тегу: @item.Articles.Count</p>
                         <div class="btn-group" role="group">
-                            <a asp-controller="Role" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
-                            <form asp-controller="Role" asp-action="Delete" method="post" asp-route-id="@item.Id">
+                            <a asp-controller="Tag" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
+                            <form asp-controller="Tag" asp-action="Delete" method="post" asp-route-id="@item.Id">
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>

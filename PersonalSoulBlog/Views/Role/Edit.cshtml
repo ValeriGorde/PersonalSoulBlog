@@ -1,16 +1,22 @@
 ﻿@model PersonalSoulBlog.ViewModels.Roles.EditRoleViewModel
 
-<h2>Редактирование роли</h2>
+<div class="container">
+    <div class="row ">
+        <div class="col-md-6 offset-md-3">
+            <form method="POST">
+                <legend>Редактирование роли</legend>
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Наименование</label>
+                    <input asp-for="Name" type="text" class="form-control" id="txtName" />
+                </div>
+                <div class="mb-3">
+                    <label for="txtCost" class="form-label">Описание</label>
+                    <input asp-for="Description" type="text" class="form-control" id="txtCost" />
+                </div>
+                <button type="submit" class="btn btn-primary">Изменить</button>
+            </form>
+        </div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div>
-        @Html.ValidationSummary(true, "")
-        @Html.HiddenFor(model => model.Id)
-        <p>Название:  @Html.EditorFor(model => model.Name)</p>
-        <p>Описание: @Html.EditorFor(model => model.Description)</p>
-        <p><input type="submit" value="Изменить" /></p>
     </div>
-}
+
+</div>

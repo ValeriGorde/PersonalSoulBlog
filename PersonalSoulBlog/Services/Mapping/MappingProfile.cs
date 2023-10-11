@@ -2,6 +2,7 @@
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.ViewModels.Account;
 using PersonalSoulBlog.ViewModels.Roles;
+using PersonalSoulBlog.ViewModels.Tag;
 using PersonalSoulBlog.ViewModels.User;
 
 namespace PersonalSoulBlog.Services.Mapping
@@ -21,6 +22,9 @@ namespace PersonalSoulBlog.Services.Mapping
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Email));
             CreateMap<User, CreateUserViewModel>();
             CreateMap<User, EditUserViewModel>().ReverseMap();
+
+            CreateMap<Tag, CreateTagViewModel>().ReverseMap();
+            CreateMap<Tag, EditTagViewModel>().ReverseMap();
         }
     }
 }

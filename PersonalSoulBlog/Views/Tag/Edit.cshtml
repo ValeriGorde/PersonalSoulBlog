@@ -1,0 +1,18 @@
+﻿@model PersonalSoulBlog.ViewModels.Tag.EditTagViewModel
+
+<div class="container">
+    <div class="row ">
+        <div class="col-md-6 offset-md-3">
+            <form method="POST">
+                <legend>Редактирование тега</legend>
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Название</label>
+                    <input asp-for="Name" type="text" class="form-control" id="txtName" />
+                </div>
+                <button type="submit" class="btn btn-primary">Изменить</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>

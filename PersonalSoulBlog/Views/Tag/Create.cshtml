@@ -1,0 +1,19 @@
+﻿@model PersonalSoulBlog.ViewModels.Tag.CreateTagViewModel
+
+
+<div class="container">
+    <div class="row ">
+        <div class="col-md-6 offset-md-3">
+            <form method="POST">
+                <legend>Создание нового тега</legend>
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Имя</label>
+                    <input asp-for="Name" type="text" class="form-control" id="txtName" />
+                </div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
