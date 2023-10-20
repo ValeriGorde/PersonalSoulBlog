@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalSoulBlog", "PersonalSoulBlog\PersonalSoulBlog.csproj", "{FB9BDC73-680D-45AD-81BC-2B51E9D2182B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalSoulBlog.DAL", "PersonalSoulBlog.DAL\PersonalSoulBlog.DAL.csproj", "{DB7FCFDF-D5B3-4318-A445-A4B134D26AB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalSoulBlog.DAL", "PersonalSoulBlog.DAL\PersonalSoulBlog.DAL.csproj", "{DB7FCFDF-D5B3-4318-A445-A4B134D26AB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

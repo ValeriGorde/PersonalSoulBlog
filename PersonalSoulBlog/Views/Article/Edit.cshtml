@@ -1,0 +1,34 @@
+﻿@model PersonalSoulBlog.ViewModels.Articles.EditArticleViewModel
+
+<div class="container">
+    <div class="row ">
+        <div class="col-md-6 offset-md-3">
+            <form method="POST">
+                <legend>Редактирование роли</legend>
+
+
+                <br />
+                @foreach (var tag in Model.Tags)
+                {
+                    <label>
+                        <input type="checkbox" name="@tag.Name" value="@tag.Id" />
+                        @tag.Name
+                    </label>
+                    <br />
+                }
+
+                <div class="mb-3">
+                    <label for="txtName" class="form-label">Заголовок</label>
+                    <input asp-for="Title" type="text" class="form-control" id="txtName" />
+                </div>
+                <div class="mb-3">
+                    <label for="txtCost" class="form-label">Описание</label>
+                    <input asp-for="Description" type="text" class="form-control" id="txtCost" />
+                </div>
+                <button type="submit" class="btn btn-primary">Изменить</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>

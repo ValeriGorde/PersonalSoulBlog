@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.Article>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="conteiner p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Список статей</h2>
+            <a asp-controller="Article" asp-action="Create">
+                <i class="bi bi-plus-circle"></i> &nbsp; Создать новую статью
+            </a>
+        </div>
+    </div>
+    <br /> <br />
+
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 m-3">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            Tags:
+                            @foreach (var articleTag in item.Tags)
+                            {
+                                <span>@articleTag.Name</span>
+                            }
+                        </h6>
+                        <p class="card-text">@item.Description</p>
+                        <div class="btn-group" role="group">
+                            <a asp-controller="Article" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
+                            <form asp-controller="Article" asp-action="Delete" method="post" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

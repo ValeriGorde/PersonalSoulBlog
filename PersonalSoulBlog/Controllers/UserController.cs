@@ -17,16 +17,17 @@ namespace PersonalSoulBlog.Controllers
         /// Вывод всех пользователей
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var usersList = _userService.GetAllUsers();
+            var usersList = await _userService.GetAllUsers();
             return View(usersList);
         }
 
-
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var user = await _userService.CreateUser();
+            return View(user);
         }
 
 
@@ -35,10 +36,11 @@ namespace PersonalSoulBlog.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [HttpPost]
         public async Task<IActionResult> Create(CreateUserViewModel model)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 var result = await _userService.CreateUser(model);
 
                 if (result)
@@ -46,7 +48,9 @@ namespace PersonalSoulBlog.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View(model);
+
+            var updatedModel = await _userService.CreateUser();
+            return View(updatedModel);
         }
 
         /// <summary>

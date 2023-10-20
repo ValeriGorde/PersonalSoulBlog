@@ -23,6 +23,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<IArticleService, ArticleService>();
 
 // Подключаем маппинг
 var mappingConfig = new MapperConfiguration(mc =>

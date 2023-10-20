@@ -23,6 +23,7 @@ namespace PersonalSoulBlog.Controllers
         public IActionResult Index()
         {
             var rolesList = _roleService.GetAllRoles();
+            
 
             return View(rolesList);
         }

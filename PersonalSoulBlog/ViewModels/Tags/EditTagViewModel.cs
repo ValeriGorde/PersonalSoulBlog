@@ -1,4 +1,4 @@
-﻿namespace PersonalSoulBlog.ViewModels.Tag
+﻿namespace PersonalSoulBlog.ViewModels.Tags
 {
     public class EditTagViewModel
     {

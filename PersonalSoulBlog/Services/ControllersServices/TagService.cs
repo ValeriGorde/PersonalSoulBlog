@@ -2,7 +2,7 @@
 using PersonalSoulBlog.DAL.Data;
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.Services.ControllersServices.Interfaces;
-using PersonalSoulBlog.ViewModels.Tag;
+using PersonalSoulBlog.ViewModels.Tags;
 
 namespace PersonalSoulBlog.Services.ControllersServices
 {
@@ -67,10 +67,6 @@ namespace PersonalSoulBlog.Services.ControllersServices
 
             if(tag != null) 
             {
-                var newTag = _mapper.Map<Tag>(tag);
-
-                tag.Name = newTag.Name;
-
                 _context.Tags.Update(tag);
                 await _context.SaveChangesAsync();
 

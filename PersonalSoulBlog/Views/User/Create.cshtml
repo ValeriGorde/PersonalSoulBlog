@@ -6,6 +6,16 @@
         <div class="col-md-6 offset-md-3">
             <form method="POST">
                 <legend>Создание нового пользователя</legend>
+                <div>
+                    <label>Роли:</label>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <div>
+                            <input type="checkbox" name="Roles" value="@role.RoleId" @(role.IsSelected ? "checked" : "")>
+                            <label>@role.RoleName</label>
+                        </div>
+                    }
+                </div>
                 <div class="mb-3">
                     <label for="txtName" class="form-label">Имя</label>
                     <input asp-for="FirstName" type="text" class="form-control" id="txtName" />
@@ -17,6 +27,10 @@
                 <div class="mb-3">
                     <label for="txtCost" class="form-label">Email</label>
                     <input asp-for="Email" type="text" class="form-control" id="txtCost" />
+                </div>
+                <div class="mb-3">
+                    <label for="txtCost" class="form-label">Пароль</label>
+                    <input asp-for="Password" type="text" class="form-control" id="txtCost" />
                 </div>
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>

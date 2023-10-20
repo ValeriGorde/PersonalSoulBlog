@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.ViewModels.Account;
+using PersonalSoulBlog.ViewModels.Articles;
 using PersonalSoulBlog.ViewModels.Roles;
-using PersonalSoulBlog.ViewModels.Tag;
+using PersonalSoulBlog.ViewModels.Tags;
 using PersonalSoulBlog.ViewModels.User;
 
 namespace PersonalSoulBlog.Services.Mapping
@@ -25,6 +26,9 @@ namespace PersonalSoulBlog.Services.Mapping
 
             CreateMap<Tag, CreateTagViewModel>().ReverseMap();
             CreateMap<Tag, EditTagViewModel>().ReverseMap();
+
+            CreateMap<CreateArticelViewModel, Article>().ReverseMap();
+            CreateMap<Article, EditArticleViewModel>().ReverseMap();
         }
     }
 }

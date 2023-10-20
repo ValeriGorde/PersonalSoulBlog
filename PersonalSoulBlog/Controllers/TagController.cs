@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PersonalSoulBlog.Services.ControllersServices.Interfaces;
-using PersonalSoulBlog.ViewModels.Tag;
+using PersonalSoulBlog.ViewModels.Tags;
 
 namespace PersonalSoulBlog.Controllers
 {
