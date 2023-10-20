@@ -7,6 +7,7 @@ namespace PersonalSoulBlog.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
 
         public UserController(IUserService userService)
         {
@@ -21,36 +22,6 @@ namespace PersonalSoulBlog.Controllers
         {
             var usersList = await _userService.GetAllUsers();
             return View(usersList);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Create()
-        {
-            var user = await _userService.CreateUser();
-            return View(user);
-        }
-
-
-        /// <summary>
-        /// Создание пользователя
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateUserViewModel model)
-        {
-            if (ModelState.IsValid)
-            { 
-                var result = await _userService.CreateUser(model);
-
-                if (result)
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-
-            var updatedModel = await _userService.CreateUser();
-            return View(updatedModel);
         }
 
         /// <summary>

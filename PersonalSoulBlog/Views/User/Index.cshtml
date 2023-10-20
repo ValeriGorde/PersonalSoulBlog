@@ -1,4 +1,7 @@
-﻿@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.User>
+﻿@using Microsoft.AspNetCore.Identity;
+@using PersonalSoulBlog.DAL.Models.Entities;
+@inject UserManager<User> _userManager
+@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.User>
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,9 +10,9 @@
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">Список пользователей</h2>
-            <a asp-controller="User" asp-action="Create">
-                <i class="bi bi-plus-circle"></i> &nbsp; Создать нового пользователя
-            </a>
+            @* <a asp-controller="User" asp-action="Create">
+            <i class="bi bi-plus-circle"></i> &nbsp; Создать нового пользователя
+            </a> *@
         </div>
     </div>
     <br /> <br />
@@ -24,8 +27,15 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">@item.FirstName @item.LastName</h5>
-                        @* тут будет роль *@
-                        @* <h6 class="card-subtitle mb-2 text-muted">@Model.CakeVm.Price $</h6> *@
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            @{
+                                var roles = await _userManager.GetRolesAsync(item);
+                            }
+                            @foreach (var role in roles)
+                            {
+                                <span class="badge rounded-pill text-bg-success" style="color:green">@role</span>
+                            }
+                        </h6>
                         <p class="card-text">@item.Email</p>
                         <div class="btn-group" role="group">
                             <a asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>

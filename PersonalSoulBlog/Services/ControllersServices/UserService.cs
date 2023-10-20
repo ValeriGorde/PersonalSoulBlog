@@ -77,7 +77,8 @@ namespace PersonalSoulBlog.Services.ControllersServices
 
         public async Task<List<User>> GetAllUsers()
         {
-            var users = _userManager.Users.ToList();
+            var users = await _userManager.Users.ToListAsync();            
+
             foreach (var user in users)
             {
                 var roles = await _userManager.GetRolesAsync(user);
