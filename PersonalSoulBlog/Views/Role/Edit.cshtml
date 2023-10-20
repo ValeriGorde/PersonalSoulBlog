@@ -13,6 +13,10 @@
                     <label for="txtCost" class="form-label">Описание</label>
                     <input asp-for="Description" type="text" class="form-control" id="txtCost" />
                 </div>
+                <div>
+                    <a asp-controller="Tag" asp-action="Index">Вернуться к списку ролей</a>
+                </div>
+                
                 <button type="submit" class="btn btn-primary">Изменить</button>
             </form>
         </div>

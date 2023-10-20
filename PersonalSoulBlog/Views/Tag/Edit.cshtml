@@ -9,6 +9,10 @@
                     <label for="txtName" class="form-label">Название</label>
                     <input asp-for="Name" type="text" class="form-control" id="txtName" />
                 </div>
+                <div>
+                    <a asp-controller="Tag" asp-action="Index">Вернуться к списку тегов</a>
+                </div>
+                
                 <button type="submit" class="btn btn-primary">Изменить</button>
             </form>
         </div>

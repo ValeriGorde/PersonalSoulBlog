@@ -11,10 +11,6 @@
                     {
                         @for (int i = 0; i < Model.Roles.Count; i++)
                         {
-                            if (i % 3 == 0)
-                            {
-                                @:<tr></tr>
-                            }
                             <td>
                                 <input type="checkbox" name="Roles[@i].IsSelected" value="true" @(Model.Roles[i].IsSelected ? "checked" : "")>
                                 <input type="hidden" name="Roles[@i].RoleId" value="@Model.Roles[i].RoleId">
@@ -37,6 +33,9 @@
                     <label for="txtCost" class="form-label">Почта</label>
                     <input asp-for="Email" type="text" class="form-control" id="txtCost" />
                 </div>
+                <div>
+                    <a asp-controller="Tag" asp-action="Index">Вернуться к списку пользователей</a>
+                </div>                
                 <button type="submit" class="btn btn-primary">Изменить</button>
             </form>
         </div>
