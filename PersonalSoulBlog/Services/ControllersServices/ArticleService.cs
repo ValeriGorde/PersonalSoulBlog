@@ -18,26 +18,39 @@ namespace PersonalSoulBlog.Services.ControllersServices
             _context = context;
         }
 
+
         public async Task Create(CreateArticelViewModel model)
         {
-            //var article = _mapper.Map<Article>(model);
+            
+            var allArticleTags = _mapper.Map<List<TagForArticleViewModel>>(model.Tags);
 
-            var article = new Article
+            var article = _mapper.Map<Article>(model);
+            article.Tags.Clear();
+
+            foreach(var articleTag in allArticleTags)
             {
-                Title = model.Title,
-                Description = model.Description,
-                Tags = model.SelectedTagsIds.Select(tagId => new Tag { Id = tagId}).ToList(),
-                UserId = model.UserId
-            };
+                if (articleTag.IsSelected)
+                {
+                    var tag = await _context.Tags.FindAsync(articleTag.TagId);
+                    if (tag != null)
+                    {
+                        article.Tags.Add(tag);
+                    }
+                }                
+            }
+
             await _context.Articles.AddAsync(article);
             await _context.SaveChangesAsync();
         }
 
         public CreateArticelViewModel Create()
         {
+            var tags = _context.Tags.ToList();
+            var allTags = _mapper.Map<List<TagForArticleViewModel>>(tags);
+
             return new CreateArticelViewModel
             {
-                Tags = _context.Tags.ToList()
+                Tags = allTags
             };
         }
 
@@ -55,9 +68,9 @@ namespace PersonalSoulBlog.Services.ControllersServices
             return false;
         }
 
-        public List<Article> GetAllArticles()
+        public async Task<List<Article>> GetAllArticles()
         {
-            return _context.Articles.ToList();
+            return await _context.Articles.Include(a => a.Tags).ToListAsync();
         }
 
         public async Task<EditArticleViewModel> GetArticleById(int id)
@@ -65,11 +78,26 @@ namespace PersonalSoulBlog.Services.ControllersServices
             if (id == 0)
                 return null;
 
-            var article = await _context.Articles.FindAsync(id);
+            var article = await _context.Articles.Include(a => a.Tags).FirstOrDefaultAsync(a => a.Id == id);
 
             if (article != null)
             {
                 var newArticle = _mapper.Map<EditArticleViewModel>(article);
+                newArticle.Tags.Clear();
+
+                var allTags = await _context.Tags.ToListAsync();
+
+                foreach (var tag in allTags)
+                {
+                    var newTag = new TagForArticleViewModel
+                    {
+                        IsSelected = article.Tags.Any(t => t.Id == tag.Id),
+                        TagId = tag.Id,
+                        TagName = tag.Name
+                    };
+                    newArticle.Tags.Add(newTag);
+                }
+
                 return newArticle;
             }
 
@@ -78,10 +106,30 @@ namespace PersonalSoulBlog.Services.ControllersServices
 
         public async Task<bool> Update(EditArticleViewModel model)
         {
-            var article = await _context.Articles.FindAsync(model);
+            var newArticle = _mapper.Map<Article>(model);
+            var article = await _context.Articles.Include(a => a.Tags).FirstOrDefaultAsync(a => a.Id == newArticle.Id);
 
             if (article != null)
             {
+                article.Id = model.Id;
+                article.Title = model.Title;
+                article.Description = model.Description;
+
+                // отчищаем предыдущие теги у статьи    
+                article.Tags.Clear();
+
+                foreach(var tag in model.Tags)
+                {
+                    if (tag.IsSelected)
+                    {
+                        var existingTag = await _context.Tags.FindAsync(tag.TagId);
+                        if (existingTag != null)
+                        {
+                            article.Tags.Add(existingTag);
+                        }
+                    }                        
+                }
+
                 _context.Articles.Update(article);
                 await _context.SaveChangesAsync();
                 return true;

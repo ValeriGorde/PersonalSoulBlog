@@ -8,6 +8,6 @@ namespace PersonalSoulBlog.ViewModels.Articles
         public string Title { get; set; }
         public string Description { get; set; }
         public int UserId { get; set; }
-        public List<Tag> Tags { get; set; } = new List<Tag>();
+        public List<TagForArticleViewModel> Tags { get; set; } = new List<TagForArticleViewModel>();
     }
 }

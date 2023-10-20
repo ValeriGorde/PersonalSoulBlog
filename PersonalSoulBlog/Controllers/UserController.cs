@@ -7,7 +7,6 @@ namespace PersonalSoulBlog.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IAccountService _accountService;
 
         public UserController(IUserService userService)
         {

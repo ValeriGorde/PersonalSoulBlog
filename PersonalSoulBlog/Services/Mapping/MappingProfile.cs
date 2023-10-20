@@ -30,6 +30,10 @@ namespace PersonalSoulBlog.Services.Mapping
 
             CreateMap<CreateArticelViewModel, Article>().ReverseMap();
             CreateMap<Article, EditArticleViewModel>().ReverseMap();
+
+            CreateMap<Tag, TagForArticleViewModel>()
+                .ForMember(x => x.TagId, opt => opt.MapFrom(c => c.Id))
+                .ForMember(x => x.TagName, opt => opt.MapFrom(c => c.Name)).ReverseMap();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace PersonalSoulBlog.Services.ControllersServices.Interfaces
 {
     public interface IArticleService
     {
-        List<Article> GetAllArticles();
+        Task<List<Article>> GetAllArticles();
         Task<EditArticleViewModel> GetArticleById(int id);
         Task Create(CreateArticelViewModel model);
         CreateArticelViewModel Create();

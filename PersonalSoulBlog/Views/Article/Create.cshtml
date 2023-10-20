@@ -8,15 +8,17 @@
                 <legend>Создание новой статьи</legend>
 
                 <br />
-                @foreach (var tag in Model.Tags)
-                {
-                    <label>
-                        <input type="checkbox" name="SelectedTagsIds" value="@tag.Id" />
-                        @tag.Name
-                    </label>                    
-                }
-                <br />
-                <input type="hidden" asp-for="SelectedTagsIds" />
+                <div>
+                    @for (int i = 0; i < Model.Tags.Count; i++)
+                    {
+                        <td>
+                            <input type="checkbox" name="Tags[@i].IsSelected" value="true" @(Model.Tags[i].IsSelected ? "checked" : "")>
+                            <input type="hidden" name="Tags[@i].TagId" value="@Model.Tags[i].TagId">
+                            <input type="hidden" name="Tags[@i].TagName" value="@Model.Tags[i].TagName">
+                            <label>@Model.Tags[i].TagName</label>
+                        </td>
+                    }
+                </div>
 
                 <div class="mb-3">
                     <label for="txtName" class="form-label">Заголовок</label>

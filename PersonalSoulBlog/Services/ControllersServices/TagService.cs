@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PersonalSoulBlog.DAL.Data;
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.Services.ControllersServices.Interfaces;
@@ -41,7 +42,7 @@ namespace PersonalSoulBlog.Services.ControllersServices
 
         public List<Tag> GetAllTags()
         {
-            return _context.Tags.ToList();
+            return _context.Tags.Include(t => t.Articles).ToList();
         }
 
         public async Task<EditTagViewModel> GetTagById(int id)

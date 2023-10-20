@@ -18,9 +18,9 @@ namespace PersonalSoulBlog.Controllers
         /// Вывод всех статей списком
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var articles = _articleService.GetAllArticles();
+            var articles = await _articleService.GetAllArticles();
             return View(articles);
         }
 

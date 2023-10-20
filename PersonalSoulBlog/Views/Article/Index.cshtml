@@ -25,10 +25,9 @@
                     <div class="card-body">
                         <h5 class="card-title">@item.Title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">
-                            Tags:
-                            @foreach (var articleTag in item.Tags)
+                            @foreach (var tag in item.Tags)
                             {
-                                <span>@articleTag.Name</span>
+                                <span class="badge rounded-pill text-bg-success" style="color:green">@tag.Name</span>
                             }
                         </h6>
                         <p class="card-text">@item.Description</p>
