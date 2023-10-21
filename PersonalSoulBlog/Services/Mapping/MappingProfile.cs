@@ -2,9 +2,10 @@
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.ViewModels.Account;
 using PersonalSoulBlog.ViewModels.Articles;
+using PersonalSoulBlog.ViewModels.Comments;
 using PersonalSoulBlog.ViewModels.Roles;
 using PersonalSoulBlog.ViewModels.Tags;
-using PersonalSoulBlog.ViewModels.User;
+using PersonalSoulBlog.ViewModels.Users;
 
 namespace PersonalSoulBlog.Services.Mapping
 {
@@ -34,6 +35,11 @@ namespace PersonalSoulBlog.Services.Mapping
             CreateMap<Tag, TagForArticleViewModel>()
                 .ForMember(x => x.TagId, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.TagName, opt => opt.MapFrom(c => c.Name)).ReverseMap();
+
+            CreateMap<Article, ArticleViewModel>()
+                .ForMember(x => x.Author, opt => opt.MapFrom(c => c.User)).ReverseMap();
+
+            CreateMap<Comment, CommentViewModel>().ReverseMap();
         }
     }
 }

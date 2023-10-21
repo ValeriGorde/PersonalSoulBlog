@@ -1,16 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.Services.ControllersServices.Interfaces;
 using PersonalSoulBlog.ViewModels.Articles;
+using PersonalSoulBlog.ViewModels.Comments;
 
 namespace PersonalSoulBlog.Controllers
 {
     public class ArticleController : Controller
     {
         private readonly IArticleService _articleService;
+        private readonly UserManager<User> _userManager;
 
-        public ArticleController(IArticleService articleService)
+        public ArticleController(IArticleService articleService, UserManager<User> userManager)
         {
             _articleService = articleService;
+            _userManager = userManager;
         }
 
 
@@ -39,6 +44,10 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateArticelViewModel model)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser != null)
+                model.User = currentUser;
+
             if (ModelState.IsValid)
             {
                 await _articleService.Create(model);
@@ -47,6 +56,7 @@ namespace PersonalSoulBlog.Controllers
 
             return View(model);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -83,6 +93,41 @@ namespace PersonalSoulBlog.Controllers
             }
 
             return View(result);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> View(int id)
+        {
+            var article = await _articleService.View(id);
+
+            if (article != null)
+                return View(article);
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(CommentViewModel model)
+        {
+            // потом перенести в сервис 
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser != null)
+                model.User = currentUser;
+
+            var article = await _articleService.GetArticleById(model.ArticleId);
+            model.Article = article;
+
+            if (ModelState.IsValid)
+            {
+                var result = await _articleService.AddComment(model);
+
+                if(result)
+                    return View(model);
+            }
+
+            // поменять статус код
+            return StatusCode(400);
         }
 
     }

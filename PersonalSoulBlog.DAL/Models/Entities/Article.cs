@@ -8,11 +8,12 @@ namespace PersonalSoulBlog.DAL.Models.Entities
         public string Title { get; set; }
         public string Description { get; set; }
 
-        // добавить привязку к комментарию
-
         // привязка статьи к пользователю
         public int UserId { get; set; }
-        public User Users { get; set; }
+        public User User { get; set; }
+
+        // привязка статьи к комментариям
+        public List<Comment> Comments { get; set; } = new List<Comment>();
 
         // связь многие ко многим с тегами
         [InverseProperty("Articles")]

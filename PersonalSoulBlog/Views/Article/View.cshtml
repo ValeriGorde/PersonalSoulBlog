@@ -1,0 +1,38 @@
+﻿@model PersonalSoulBlog.ViewModels.Articles.ArticleViewModel
+
+<h1>@Model.Title</h1>
+<p>
+    @foreach (var tag in Model.Tags)
+    {
+        <span class="badge rounded-pill text-bg-success" style="color:green">@tag.TagName</span>
+    }
+</p>
+<hr>
+
+<p>@Model.Description</p>
+<hr>
+
+<p>Автор статьи: @Model.Author.Email</p>
+
+<p>Комментарии к статье</p>
+
+@if(Model.Comments is not null)
+{
+    @foreach (var comment in Model.Comments)
+    {
+        <div>
+            <p>@comment.Text</p>
+            <p>Автор: @comment.User.Email</p>
+        </div>
+    }
+
+}
+
+
+<form method="post" action="/Article/AddComment">
+    <input type="hidden" name="ArticleId" value="@Model.Id" />
+    <div>
+        <textarea name="Text"></textarea>
+    </div>
+    <button type="submit">Отправить</button>
+</form>

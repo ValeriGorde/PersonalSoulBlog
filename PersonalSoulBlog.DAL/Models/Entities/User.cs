@@ -7,6 +7,11 @@ namespace PersonalSoulBlog.DAL.Models.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+
+        // один пользователь может оставлять множество комментариев
+        public List<Comment> Comments { get; set; } = new List<Comment>();
+
+        // у одного пользователя может быть несколько статей
         public List<Article> Articles { get; set; } = new List<Article>();
     }
 }

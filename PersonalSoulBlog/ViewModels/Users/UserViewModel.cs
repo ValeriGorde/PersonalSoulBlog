@@ -1,6 +1,6 @@
 ﻿using PersonalSoulBlog.DAL.Models.Entities;
 
-namespace PersonalSoulBlog.ViewModels.User
+namespace PersonalSoulBlog.ViewModels.Users
 {
     public class UserViewModel
     {

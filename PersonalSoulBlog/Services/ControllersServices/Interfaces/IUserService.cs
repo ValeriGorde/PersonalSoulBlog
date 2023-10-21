@@ -1,5 +1,5 @@
 ﻿using PersonalSoulBlog.DAL.Models.Entities;
-using PersonalSoulBlog.ViewModels.User;
+using PersonalSoulBlog.ViewModels.Users;
 
 namespace PersonalSoulBlog.Services.ControllersServices.Interfaces
 {

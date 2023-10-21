@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalSoulBlog.DAL.Data;
 
@@ -11,9 +12,10 @@ using PersonalSoulBlog.DAL.Data;
 namespace PersonalSoulBlog.DAL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231020163538_TablesArticlesAndCommentsChanged")]
+    partial class TablesArticlesAndCommentsChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,17 +189,9 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Comments");
                 });
@@ -407,13 +401,7 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PersonalSoulBlog.DAL.Models.Entities.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId1");
-
                     b.Navigation("Article");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PersonalSoulBlog.DAL.Models.Entities.Article", b =>
@@ -424,8 +412,6 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
             modelBuilder.Entity("PersonalSoulBlog.DAL.Models.Entities.User", b =>
                 {
                     b.Navigation("Articles");
-
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-﻿namespace PersonalSoulBlog.ViewModels.User
+﻿namespace PersonalSoulBlog.ViewModels.Users
 {
     public class RoleForUserViewModel
     {

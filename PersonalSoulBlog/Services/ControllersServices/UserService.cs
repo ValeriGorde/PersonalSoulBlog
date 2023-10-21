@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.Services.ControllersServices.Interfaces;
-using PersonalSoulBlog.ViewModels.User;
+using PersonalSoulBlog.ViewModels.Users;
 using System.Linq;
 
 namespace PersonalSoulBlog.Services.ControllersServices

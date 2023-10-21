@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PersonalSoulBlog.DAL.Data;
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.Services.ControllersServices.Interfaces;
 using PersonalSoulBlog.ViewModels.Articles;
+using PersonalSoulBlog.ViewModels.Comments;
 
 namespace PersonalSoulBlog.Services.ControllersServices
 {
@@ -11,23 +13,28 @@ namespace PersonalSoulBlog.Services.ControllersServices
     {
         private readonly IMapper _mapper;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public ArticleService(IMapper mapper, ApplicationDbContext context)
+        public ArticleService(IMapper mapper, ApplicationDbContext context, 
+            UserManager<User> userManager, IHttpContextAccessor httpContext)
         {
             _mapper = mapper;
             _context = context;
+            _userManager = userManager;
+            _httpContext = httpContext;
         }
 
 
         public async Task Create(CreateArticelViewModel model)
         {
-            
+
             var allArticleTags = _mapper.Map<List<TagForArticleViewModel>>(model.Tags);
 
             var article = _mapper.Map<Article>(model);
             article.Tags.Clear();
 
-            foreach(var articleTag in allArticleTags)
+            foreach (var articleTag in allArticleTags)
             {
                 if (articleTag.IsSelected)
                 {
@@ -36,7 +43,7 @@ namespace PersonalSoulBlog.Services.ControllersServices
                     {
                         article.Tags.Add(tag);
                     }
-                }                
+                }
             }
 
             await _context.Articles.AddAsync(article);
@@ -58,7 +65,7 @@ namespace PersonalSoulBlog.Services.ControllersServices
         {
             var article = await _context.Articles.FindAsync(id);
 
-            if(article != null)
+            if (article != null)
             {
                 _context.Articles.Remove(article);
                 await _context.SaveChangesAsync();
@@ -70,10 +77,12 @@ namespace PersonalSoulBlog.Services.ControllersServices
 
         public async Task<List<Article>> GetAllArticles()
         {
-            return await _context.Articles.Include(a => a.Tags).ToListAsync();
+            return await _context.Articles.Include(a => a.Tags)
+                .Include(u => u.User)
+                .ToListAsync();
         }
 
-        public async Task<EditArticleViewModel> GetArticleById(int id)
+        public async Task<ArticleViewModel> GetArticleById(int id)
         {
             if (id == 0)
                 return null;
@@ -82,7 +91,7 @@ namespace PersonalSoulBlog.Services.ControllersServices
 
             if (article != null)
             {
-                var newArticle = _mapper.Map<EditArticleViewModel>(article);
+                var newArticle = _mapper.Map<ArticleViewModel>(article);
                 newArticle.Tags.Clear();
 
                 var allTags = await _context.Tags.ToListAsync();
@@ -118,7 +127,7 @@ namespace PersonalSoulBlog.Services.ControllersServices
                 // отчищаем предыдущие теги у статьи    
                 article.Tags.Clear();
 
-                foreach(var tag in model.Tags)
+                foreach (var tag in model.Tags)
                 {
                     if (tag.IsSelected)
                     {
@@ -127,7 +136,7 @@ namespace PersonalSoulBlog.Services.ControllersServices
                         {
                             article.Tags.Add(existingTag);
                         }
-                    }                        
+                    }
                 }
 
                 _context.Articles.Update(article);
@@ -136,6 +145,33 @@ namespace PersonalSoulBlog.Services.ControllersServices
             }
 
             return false;
+        }
+
+        public async Task<ArticleViewModel> View(int id)
+        {
+            var article = await _context.Articles
+                .Include(t => t.Tags)
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (article == null)
+            {
+                return null;
+            }
+
+            var viewModel = _mapper.Map<ArticleViewModel>(article);
+
+            return viewModel;
+        }
+
+        public async Task<bool> AddComment(CommentViewModel model)
+        {
+            var comment = _mapper.Map<Comment>(model);
+
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
