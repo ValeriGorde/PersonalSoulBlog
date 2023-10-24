@@ -61,11 +61,11 @@ namespace PersonalSoulBlog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var returnUrl = Url.Action("Index", "Home"); ;
+                var returnUrl = Url.Action("Index", "Article"); ;
                 var result = await _accountService.Login(model, returnUrl);
                 if (result.Success)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Article");
                 }
                 else
                     ModelState.AddModelError("", result.ErrorMessage);
@@ -83,7 +83,7 @@ namespace PersonalSoulBlog.Controllers
         public async Task<IActionResult> Logout()
         {
             await _accountService.Logout();
-            return RedirectToAction("Index", "Home");   
+            return RedirectToAction("Index", "Article");   
         }
 
 

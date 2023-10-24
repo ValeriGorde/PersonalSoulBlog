@@ -1,38 +1,61 @@
 ﻿@model PersonalSoulBlog.ViewModels.Articles.ArticleResponse
 
-<h1>@Model.Title</h1>
-<p>
-    @foreach (var tag in Model.Tags)
-    {
-        <span class="badge rounded-pill text-bg-success" style="color:green">@tag.TagName</span>
-    }
-</p>
-<hr>
+<div class="container p-3">
+    <div class="row pt-4">
+        <h1>@Model.Title</h1>
+        <p>
+            @foreach (var tag in Model.Tags)
+            {
+                <span class="badge rounded-pill text-bg-success" style="color:green">@tag.TagName</span>
+            }
+        </p>
+        <hr>
 
-<p>@Model.Description</p>
-<hr>
+        <p>@Model.Description</p>
+        <hr>
 
-<p>Автор статьи: @Model.Author.Email</p>
-
-<p>Комментарии к статье</p>
-
-@if(Model.Comments is not null)
-{
-    @foreach (var comment in Model.Comments)
-    {
-        <div>
-            <p>@comment.Text</p>
-            <p>Автор: @comment.User.Email</p>
-        </div>
-    }
-
-}
+        <p class="fw-bold text-end">Автор статьи: @Model.Author.Email</p>
 
 
-<form method="post" action="/Article/AddComment">
-    <input type="hidden" name="ArticleId" value="@Model.Id" />
-    <div>
-        <textarea name="Text"></textarea>
+
+        
+
+        @if (Model.Comments.Count != 0)
+        {
+            <p>Комментарии к статье:</p>
+
+            @foreach (var comment in Model.Comments)
+            {
+                <div>
+                    <div class="card border-info mb-2">
+                        <div class="row-1 ps-3">
+                            <p>@comment.Text</p>
+                            <p class="badge rounded-pill text-bg-success" style="color:lightgreen">@comment.User.Email</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        <div class="container">
+            <div class="row pt-3">
+                <p>Оставить комментарий к статье:</p>
+                <form method="post" action="/Article/AddComment">
+                    <input type="hidden" name="ArticleId" value="@Model.Id" />
+                    <div class="row">
+                        <div class=" col-5">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="2" name="Text"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br /> <br />
+                    <div class="mb-3">
+                        <button class="btn btn-secondary" type="submit">Отправить</button>
+                    </div>
+                </form>
+            </div>            
+        </div>      
+
     </div>
-    <button type="submit">Отправить</button>
-</form>
+</div>

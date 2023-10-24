@@ -1,6 +1,49 @@
 ﻿@model PersonalSoulBlog.ViewModels.Account.RegisterRequest
 
-<h2>Регистрация нового пользователя</h2>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-md-6 offset-md-3">
+            <form method="POST" asp-controller="Account" asp-action="Register">
+                <div asp-validation-summary="ModelOnly"></div>
+                <legend>Регистрация</legend>
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">Имя</label>
+                    <input asp-for="FirstName" type="text" id="firstName" class="form-control"/>
+                    <span asp-validation-for="FirstName"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Фамилия</label>
+                    <input asp-for="LastName" type="text" id="lastName" class="form-control" />
+                    <span asp-validation-for="LastName"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input asp-for="Email" type="text" id="email" class="form-control"/>
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="password" asp-for="Password"itemid="password" class="form-control" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="passwordConfirm" class="form-label">Подтвердите пароль</label>
+                    <input type="password" asp-for="PasswordConfirm" id="passwordConfirm" class="form-control" />
+                    <span asp-validation-for="PasswordConfirm"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Регистрация</button>
+                <br /> <br />
+                <div class="mb-3">
+                    <a asp-controller="Account" asp-action="Login">Уже есть аккаунт?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@* <h2>Регистрация нового пользователя</h2>
 <form method="post" asp-controller="Account" asp-action="Register">
     <div asp-validation-summary="ModelOnly"></div>
     <div>
@@ -34,4 +77,4 @@
     <div>
         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Уже есть аккаунт?</a>
     </div>
-</form>
+</form> *@

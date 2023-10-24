@@ -1,7 +1,7 @@
-﻿@model PersonalSoulBlog.ViewModels.Articles.EditArticleRequest
+﻿@model PersonalSoulBlog.ViewModels.Articles.ArticleResponse
 
-<div class="container">
-    <div class="row ">
+<div class="container p-3">
+    <div class="row pt-4">
         <div class="col-md-6 offset-md-3">
             <form method="POST">
                 <legend>Редактирование статьи</legend>
@@ -11,16 +11,12 @@
                     {
                         @for (int i = 0; i < Model.Tags.Count; i++)
                         {
-                            if (i % 3 == 0)
-                            {
-                                @:<tr></tr>
-                            }
-                            <td>
-                                <input type="checkbox" name="Tags[@i].IsSelected" value="true" @(Model.Tags[i].IsSelected ? "checked" : "")>
+                            <span class="form-check">
+                                <input class="form-check-input" type="checkbox" name="Tags[@i].IsSelected" value="true" @(Model.Tags[i].IsSelected ? "checked" : "")>
                                 <input type="hidden" name="Tags[@i].TagId" value="@Model.Tags[i].TagId">
                                 <input type="hidden" name="Tags[@i].TagName" value="@Model.Tags[i].TagName">
-                                <label>@Model.Tags[i].TagName</label>
-                            </td>
+                                <label class="form-check-label">@Model.Tags[i].TagName</label>
+                            </span>
                         }
                     }
                 </div>
@@ -31,12 +27,12 @@
                 <div class="mb-3">
                     <label for="txtCost" class="form-label">Описание</label>
                     <input asp-for="Description" type="text" class="form-control" id="txtCost" />
-                </div>
-                <div>
+                </div>               
+                <button type="submit" class="btn btn-primary">Изменить</button>
+                <br /> <br />
+                <div class="mb-3">
                     <a asp-controller="Tag" asp-action="Index">Вернуться к списку статей</a>
                 </div>
-                
-                <button type="submit" class="btn btn-primary">Изменить</button>
             </form>
         </div>
 

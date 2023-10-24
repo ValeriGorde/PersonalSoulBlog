@@ -77,11 +77,8 @@ namespace PersonalSoulBlog.Services.Contracts
         }
 
         public async Task<ArticleResponse> GetArticleById(Guid id)
-        {
-            // возможно стоит иклюдить
-            //var article = await _context.Articles.Include(a => a.Tags).FirstOrDefaultAsync(a => a.Id == id);
-
-            var article = await _articleRepo.GetById(id);
+        {           
+            var article = await _articleRepo.GetArticleById(id);
 
             if (article != null)
             {
@@ -110,8 +107,7 @@ namespace PersonalSoulBlog.Services.Contracts
         public async Task<bool> Update(EditArticleRequest model)
         {
             var newArticle = _mapper.Map<Article>(model);
-            var article = await _articleRepo.GetById(newArticle.Id);
-            //var article = await _context.Articles.Include(a => a.Tags).FirstOrDefaultAsync(a => a.Id == newArticle.Id);
+            var article = await _articleRepo.GetArticleById(newArticle.Id);
 
             if (article != null)
             {

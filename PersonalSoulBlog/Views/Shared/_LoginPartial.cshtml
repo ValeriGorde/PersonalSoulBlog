@@ -3,16 +3,16 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-<ul class="righ-align">
+<ul class="navbar-nav ml-auto">
     @if (SignInManager.IsSignedIn(User))
     {
-        <l>Привет, @User.Identity.Name!</l>
-        <form method="post" asp-controller="Account" asp-action="Logout">
-            <input class="enter_submit" type="submit" value="Выход" />
+        <li class="nav-item mr-2">Привет, @User.Identity.Name!</li>
+        <form class="form-inline" method="post" asp-controller="Account" asp-action="Logout">
+            <input class="enter_submit nav-item" type="submit" value="Выход" />
         </form>
     }
     else
     {
-        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
-    }    
+        <li class="nav-item"><a class="nav-link" href="/Account/Login">Вход</a></li>
+    }
 </ul>
