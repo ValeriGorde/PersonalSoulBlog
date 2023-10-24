@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PersonalSoulBlog.Services.ControllersServices.Interfaces;
+using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.ViewModels.Roles;
 
 namespace PersonalSoulBlog.Controllers
@@ -13,7 +13,6 @@ namespace PersonalSoulBlog.Controllers
         {
             _roleService = roleService;
         }
-
 
         /// <summary>
         /// Вывод всех ролей
@@ -45,7 +44,7 @@ namespace PersonalSoulBlog.Controllers
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRoleViewModel model)
+        public async Task<IActionResult> Create(CreateRoleRequest model)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +81,7 @@ namespace PersonalSoulBlog.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Edit(EditRoleViewModel model)
+        public async Task<IActionResult> Edit(EditRoleRequest model)
         {
             if (ModelState.IsValid)
             {

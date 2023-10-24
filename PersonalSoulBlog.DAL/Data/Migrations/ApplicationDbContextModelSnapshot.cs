@@ -24,11 +24,11 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
 
             modelBuilder.Entity("ArticleTag", b =>
                 {
-                    b.Property<int>("ArticlesId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ArticlesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("TagsId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TagsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ArticlesId", "TagsId");
 
@@ -145,11 +145,9 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
 
             modelBuilder.Entity("PersonalSoulBlog.DAL.Models.Entities.Article", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -159,45 +157,37 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("PersonalSoulBlog.DAL.Models.Entities.Comment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ArticleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -212,7 +202,6 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -235,11 +224,9 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
 
             modelBuilder.Entity("PersonalSoulBlog.DAL.Models.Entities.Tag", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -394,7 +381,7 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
                 {
                     b.HasOne("PersonalSoulBlog.DAL.Models.Entities.User", "User")
                         .WithMany("Articles")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -409,7 +396,7 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
 
                     b.HasOne("PersonalSoulBlog.DAL.Models.Entities.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Article");
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PersonalSoulBlog.Services.ControllersServices.Interfaces;
+using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.ViewModels.Users;
 
 namespace PersonalSoulBlog.Controllers
@@ -46,7 +46,7 @@ namespace PersonalSoulBlog.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
+        public async Task<IActionResult> Edit(EditUserRequest model)
         {
             if (ModelState.IsValid)
             {

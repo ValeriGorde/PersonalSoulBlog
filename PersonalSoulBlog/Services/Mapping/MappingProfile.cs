@@ -13,33 +13,33 @@ namespace PersonalSoulBlog.Services.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<RegisterViewModel, User>()
+            CreateMap<RegisterRequest, User>()
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Email));
-            CreateMap<CreateRoleViewModel, Role>()
+            CreateMap<CreateRoleRequest, Role>()
                 .ForMember(x => x.NormalizedName, opt => opt.MapFrom(c => c.Name.ToUpperInvariant()));
-            CreateMap<Role, CreateRoleViewModel>();
-            CreateMap<Role, EditRoleViewModel>().ReverseMap();
+            CreateMap<Role, CreateRoleRequest>();
+            CreateMap<Role, EditRoleRequest>().ReverseMap();
 
-            CreateMap<CreateUserViewModel, User>()
+            CreateMap<CreateUserRequest, User>()
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.Email));
-            CreateMap<User, CreateUserViewModel>();
-            CreateMap<User, EditUserViewModel>().ReverseMap();
-            CreateMap<User, UserViewModel>().ReverseMap();
+            CreateMap<User, CreateUserRequest>();
+            CreateMap<User, EditUserRequest>().ReverseMap();
+            CreateMap<User, UserResponse>().ReverseMap();
 
-            CreateMap<Tag, CreateTagViewModel>().ReverseMap();
-            CreateMap<Tag, EditTagViewModel>().ReverseMap();
+            CreateMap<Tag, CreateTagRequest>().ReverseMap();
+            CreateMap<Tag, EditTagRequest>().ReverseMap();
 
-            CreateMap<CreateArticelViewModel, Article>().ReverseMap();
-            CreateMap<Article, EditArticleViewModel>().ReverseMap();
+            CreateMap<CreateArticelRequest, Article>().ReverseMap();
+            CreateMap<Article, EditArticleRequest>().ReverseMap();
 
-            CreateMap<Tag, TagForArticleViewModel>()
+            CreateMap<Tag, TagForArticleRequest>()
                 .ForMember(x => x.TagId, opt => opt.MapFrom(c => c.Id))
                 .ForMember(x => x.TagName, opt => opt.MapFrom(c => c.Name)).ReverseMap();
 
-            CreateMap<Article, ArticleViewModel>()
+            CreateMap<Article, ArticleResponse>()
                 .ForMember(x => x.Author, opt => opt.MapFrom(c => c.User)).ReverseMap();
 
-            CreateMap<Comment, CommentViewModel>().ReverseMap();
+            CreateMap<Comment, CommentResponse>().ReverseMap();
         }
     }
 }

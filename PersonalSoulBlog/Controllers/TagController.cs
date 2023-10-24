@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PersonalSoulBlog.Services.ControllersServices.Interfaces;
+using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.ViewModels.Tags;
 
 namespace PersonalSoulBlog.Controllers
@@ -18,9 +18,9 @@ namespace PersonalSoulBlog.Controllers
         /// Представление для всех тэгов
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var tagsList = _tagService.GetAllTags();
+            var tagsList = await _tagService.GetAllTags();
             return View(tagsList);
         }
 
@@ -37,7 +37,7 @@ namespace PersonalSoulBlog.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create(CreateTagViewModel model)
+        public async Task<IActionResult> Create(CreateTagRequest model)
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +53,7 @@ namespace PersonalSoulBlog.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var tag = await _tagService.GetTagById(id);
 
@@ -70,7 +70,7 @@ namespace PersonalSoulBlog.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Edit(EditTagViewModel model)
+        public async Task<IActionResult> Edit(EditTagRequest model)
         {
             if(ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace PersonalSoulBlog.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _tagService.DeleteTag(id);
 

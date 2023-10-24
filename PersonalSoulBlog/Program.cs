@@ -4,8 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using PersonalSoulBlog.DAL.Data;
 using PersonalSoulBlog.DAL.Data.DefaultData;
 using PersonalSoulBlog.DAL.Models.Entities;
+using PersonalSoulBlog.DAL.Models.Repositories.Interfaces;
+using PersonalSoulBlog.DAL.Models.Repositories;
+using PersonalSoulBlog.Services.Contracts;
+using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.Services.ControllersServices;
-using PersonalSoulBlog.Services.ControllersServices.Interfaces;
 using PersonalSoulBlog.Services.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,12 +21,20 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Регистрация зависимостей репозиториев
+builder.Services
+    .AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>))
+    .AddScoped<ITagRepository, TagRepository>()
+    .AddScoped<IArticleRepository, ArticleRepository>();
+
+
 // Подключаем сервисы
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ITagService, TagService>();
-builder.Services.AddScoped<IArticleService, ArticleService>();
+builder.Services
+    .AddScoped<IAccountService, AccountService>()
+    .AddScoped<IRoleService, RoleService>()
+    .AddScoped<IUserService, UserService>()
+    .AddScoped<ITagService, TagService>()
+    .AddScoped<IArticleService, ArticleService>();
 
 // Подключаем маппинг
 var mappingConfig = new MapperConfiguration(mc =>

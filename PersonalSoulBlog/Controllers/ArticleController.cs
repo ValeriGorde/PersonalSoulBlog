@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PersonalSoulBlog.DAL.Data;
 using PersonalSoulBlog.DAL.Models.Entities;
-using PersonalSoulBlog.Services.ControllersServices.Interfaces;
+using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.ViewModels.Articles;
 using PersonalSoulBlog.ViewModels.Comments;
 
@@ -34,15 +35,15 @@ namespace PersonalSoulBlog.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var model = _articleService.Create();
+            var model = await _articleService.Create();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateArticelViewModel model)
+        public async Task<IActionResult> Create(CreateArticelRequest model)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser != null)
@@ -59,7 +60,7 @@ namespace PersonalSoulBlog.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var article = await _articleService.GetArticleById(id);
 
@@ -72,7 +73,7 @@ namespace PersonalSoulBlog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditArticleViewModel model)
+        public async Task<IActionResult> Edit(EditArticleRequest model)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +85,7 @@ namespace PersonalSoulBlog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _articleService.Delete(id);
             if (result)
@@ -97,7 +98,7 @@ namespace PersonalSoulBlog.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> View(int id)
+        public async Task<IActionResult> View(Guid id)
         {
             var article = await _articleService.View(id);
 
@@ -108,22 +109,19 @@ namespace PersonalSoulBlog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment(CommentViewModel model)
+        public async Task<IActionResult> AddComment(CommentResponse model)
         {
             // потом перенести в сервис 
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser != null)
                 model.User = currentUser;
 
-            var article = await _articleService.GetArticleById(model.ArticleId);
-            model.Article = article;
-
             if (ModelState.IsValid)
             {
                 var result = await _articleService.AddComment(model);
 
                 if(result)
-                    return View(model);
+                    return RedirectToAction("View", "Article", new { id = model.ArticleId }); ;
             }
 
             // поменять статус код

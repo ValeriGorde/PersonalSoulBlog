@@ -1,9 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using PersonalSoulBlog.DAL.Models.Entities;
-using PersonalSoulBlog.Services.ControllersServices.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.ViewModels.Account;
 
 namespace PersonalSoulBlog.Controllers
@@ -29,7 +25,7 @@ namespace PersonalSoulBlog.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterRequest model)
         {
             var result = await _accountService.Register(model);
             if (result.Success)
@@ -50,7 +46,7 @@ namespace PersonalSoulBlog.Controllers
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {
-            return View(new LoginViewModel { ReturnUrl = returnUrl});
+            return View(new LoginRequest { ReturnUrl = returnUrl});
         }
 
 
@@ -61,7 +57,7 @@ namespace PersonalSoulBlog.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginRequest model)
         {
             if (ModelState.IsValid)
             {

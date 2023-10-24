@@ -11,6 +11,11 @@ namespace PersonalSoulBlog.DAL.Data
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        protected ApplicationDbContext()
+        {
+        }
+
         public DbSet<Article> Articles { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Comment> Comments { get; set; }

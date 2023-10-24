@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalSoulBlog.DAL.Models.Entities
 {
@@ -9,7 +10,6 @@ namespace PersonalSoulBlog.DAL.Models.Entities
         public string Description { get; set; }
 
         // привязка статьи к пользователю
-        public int UserId { get; set; }
         public User User { get; set; }
 
         // привязка статьи к комментариям
