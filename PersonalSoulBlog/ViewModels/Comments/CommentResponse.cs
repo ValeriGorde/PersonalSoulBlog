@@ -7,7 +7,6 @@ namespace PersonalSoulBlog.ViewModels.Comments
     {
         public Guid Id { get; set; }
         public string Text { get; set; }
-        public int UserId { get; set; } 
         public User? User { get; set; }
         public Guid ArticleId { get; set; }
         public ArticleResponse? Article { get; set; }

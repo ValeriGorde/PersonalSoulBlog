@@ -14,12 +14,15 @@ namespace PersonalSoulBlog.Services.Contracts
         private readonly IMapper _mapper;
         private readonly IArticleRepository _articleRepo;
         private readonly ITagRepository _tagRepo;
+        private readonly ICommentRepository _commentRepo;
 
-        public ArticleService(IMapper mapper, IArticleRepository articleRepo, ITagRepository tagRepo)
+        public ArticleService(IMapper mapper, IArticleRepository articleRepo, 
+            ITagRepository tagRepo, ICommentRepository commentRepo)
         {
             _mapper = mapper;
             _articleRepo = articleRepo;
             _tagRepo = tagRepo;
+            _commentRepo = commentRepo;
         }
 
         public async Task Create(CreateArticelRequest model)
@@ -156,13 +159,12 @@ namespace PersonalSoulBlog.Services.Contracts
         {
             var comment = _mapper.Map<Comment>(model);
 
-            //var article = _context.Articles.FirstOrDefault(a => a.Id == model.ArticleId);
-
-            var article = await _articleRepo.GetById(model.ArticleId);
+            // находим статью и привязываем к комментарию
+            var article = await _articleRepo.GetArticleById(model.ArticleId);
             if(article != null)
                 comment.Article = article;
 
-            await _articleRepo.Add(article);
+            await _commentRepo.Add(comment);
 
             return true;
         }

@@ -25,7 +25,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services
     .AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>))
     .AddScoped<ITagRepository, TagRepository>()
-    .AddScoped<IArticleRepository, ArticleRepository>();
+    .AddScoped<IArticleRepository, ArticleRepository>()
+    .AddScoped<ICommentRepository, CommentRepository>();
 
 
 // Подключаем сервисы

@@ -30,7 +30,7 @@
                                 <span class="badge rounded-pill text-bg-success" style="color:green">@tag.Name</span>
                             }
                         </h6>
-                        <p class="card-text">@item.Description</p>
+                        <p class="card-text">@item.User</p>
                         <div class="btn-group" role="group">
                             <a asp-controller="Article" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
                             <form asp-controller="Article" asp-action="Delete" method="post" asp-route-id="@item.Id">
