@@ -25,12 +25,11 @@
                     <input asp-for="Title" type="text" class="form-control" id="txtName" />
                 </div>
                 <div class="mb-3">
-                    <label for="txtCost" class="form-label">Описание</label>
-                    <input asp-for="Description" type="text" class="form-control" id="txtCost" />
+                    <label for="description" class="form-label">Описание</label>
+                    <textarea asp-for="Description" rows="5" type="text" class="form-control" id="description"></textarea>
                 </div>               
                 <button type="submit" class="btn btn-primary">Изменить</button>
-                <br /> <br />
-                <div class="mb-3">
+                <div class="mb-3 pt-3">
                     <a asp-controller="Tag" asp-action="Index">Вернуться к списку статей</a>
                 </div>
             </form>

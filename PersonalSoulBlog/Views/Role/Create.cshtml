@@ -1,24 +1,25 @@
 ﻿@model PersonalSoulBlog.ViewModels.Roles.CreateRoleRequest
 
 
-<div class="container">
-    <div class="row ">
+<div class="container p-3">
+    <div class="row pt-4">
         <div class="col-md-6 offset-md-3">
             <form method="POST">
                 <legend>Создание новой роли</legend>
                 <div class="mb-3">
-                    <label for="txtName" class="form-label">Наименование</label>
-                    <input asp-for="Name" type="text" class="form-control" id="txtName" />
+                    <label for="name" class="form-label">Наименование</label>
+                    <input asp-for="Name" type="text" class="form-control" id="name" />
                 </div>
                 <div class="mb-3">
-                    <label for="txtCost" class="form-label">Описание</label>
-                    <input asp-for="Description" type="text" class="form-control" id="txtCost" />
+                    <label for="description" class="form-label">Описание</label>
+                    <textarea rows="2" class="form-control" name="Description" type="text" id="description"></textarea>
                 </div>
-                <div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+                <div class="mb-3 pt-3">
                     <a asp-controller="Tag" asp-action="Index">Вернуться к списку ролей</a>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Добавить</button>
+                
             </form>
         </div>
 
