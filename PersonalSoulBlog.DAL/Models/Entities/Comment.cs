@@ -7,6 +7,7 @@ namespace PersonalSoulBlog.DAL.Models.Entities
         public string Text { get; set; }
 
         // привязка комментария к пользователю
+
         public User User { get; set; }
 
         //привязка комментария к статье

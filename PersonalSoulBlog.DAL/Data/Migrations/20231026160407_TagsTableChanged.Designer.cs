@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalSoulBlog.DAL.Data;
 
@@ -11,9 +12,10 @@ using PersonalSoulBlog.DAL.Data;
 namespace PersonalSoulBlog.DAL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231026160407_TagsTableChanged")]
+    partial class TagsTableChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -411,7 +413,7 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
             modelBuilder.Entity("PersonalSoulBlog.DAL.Models.Entities.Tag", b =>
                 {
                     b.HasOne("PersonalSoulBlog.DAL.Models.Entities.User", "User")
-                        .WithMany("Tags")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -427,8 +429,6 @@ namespace PersonalSoulBlog.DAL.Data.Migrations
                     b.Navigation("Articles");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

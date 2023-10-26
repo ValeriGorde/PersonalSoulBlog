@@ -1,4 +1,8 @@
-﻿@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.Role>
+﻿@using Microsoft.AspNetCore.Identity;
+@using PersonalSoulBlog.DAL.Models.Entities;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> _userManager
+@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.Role>
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,9 +11,12 @@
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">Список ролей</h2>
-            <a asp-controller="Role" asp-action="Create">
-                <i class="bi bi-plus-circle"></i> &nbsp; Создать новую роль
-            </a>
+            @if (User.IsInRole("Администратор"))
+            {
+                <a asp-controller="Role" asp-action="Create">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Создать новую роль
+                </a>                
+            }            
         </div>
     </div>
     <br /> <br />
@@ -25,12 +32,15 @@
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
                         <p class="card-text">@item.Description</p>
-                        <div class="btn-group" role="group">
-                            <a asp-controller="Role" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
-                            <form asp-controller="Role" asp-action="Delete" method="post" asp-route-id="@item.Id">
-                                <button type="submit" class="btn btn-danger ms-3">Удалить</button>
-                            </form>
-                        </div> 
+                        @if (User.IsInRole("Администратор"))
+                        {
+                            <div class="btn-group" role="group">
+                                <a asp-controller="Role" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
+                                <form asp-controller="Role" asp-action="Delete" method="post" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-danger ms-3">Удалить</button>
+                                </form>
+                            </div>
+                        }                        
                     </div>
                 </div>
             </div>

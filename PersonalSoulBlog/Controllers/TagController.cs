@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.ViewModels.Tags;
 
@@ -8,10 +10,12 @@ namespace PersonalSoulBlog.Controllers
     public class TagController : Controller
     {
         private readonly ITagService _tagService;
+        private readonly UserManager<User> _userManager;
 
-        public TagController(ITagService tagService)
+        public TagController(ITagService tagService, UserManager<User> userManager)
         {
             _tagService = tagService;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -39,6 +43,10 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateTagRequest model)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser != null)
+                model.User = currentUser;
+
             if (ModelState.IsValid)
             {
                 await _tagService.CreateTag(model);

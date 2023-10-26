@@ -1,4 +1,8 @@
 ﻿@model PersonalSoulBlog.ViewModels.Articles.ArticleResponse
+﻿@using Microsoft.AspNetCore.Identity;
+@using PersonalSoulBlog.DAL.Models.Entities;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <div class="container p-3">
     <div class="row pt-4">
@@ -29,12 +33,16 @@
                             <p>@comment.Text</p>
                             <p class="badge rounded-pill bg-info">@comment.User.Email</p>
                         </div>
-                        <div>
-                            <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-outline-primary" type="button">Редактировать</a>
-                            <form asp-controller="Comment" asp-action="Delete" method="post" asp-route-id="@comment.Id">
-                                <button type="submit" class="btn btn-outline-danger">Удалить</button>
-                            </form>
-                        </div>
+
+                        @if(User.IsInRole("Администратор") || User.IsInRole("Модератор") || User.Identity.Name == comment.User.Email)
+                        {
+                            <div>
+                                <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-outline-primary" type="button">Редактировать</a>
+                                <form asp-controller="Comment" asp-action="Delete" method="post" asp-route-id="@comment.Id">
+                                    <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                                </form>
+                            </div>
+                        }                        
                     </div>
                 </div>
             }
@@ -57,6 +65,7 @@
                         </div>
                     </div>
                     <br /> <br />
+
                     <div class="mb-3">
                         <button class="btn btn-secondary" type="submit">Отправить</button>
                     </div>

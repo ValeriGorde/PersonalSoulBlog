@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using PersonalSoulBlog.DAL.Models.Entities;
+@inject SignInManager<User> SignInManager
 @inject UserManager<User> _userManager
 @model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.User>
 @{
@@ -37,12 +38,16 @@
                             }
                         </h6>
                         <p class="card-text">@item.Email</p>
-                        <div class="btn-group" role="group">
-                            <a asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
-                            <form asp-controller="User" asp-action="Delete" method="post" asp-route-id="@item.Id">
-                                <button type="submit" class="btn btn-danger ms-3">Удалить</button>
-                            </form>
-                        </div>
+
+                        @if (User.IsInRole("Администратор"))
+                        {
+                            <div class="btn-group" role="group">
+                                <a asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
+                                <form asp-controller="User" asp-action="Delete" method="post" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-danger ms-3">Удалить</button>
+                                </form>
+                            </div>
+                        }                        
                     </div>
                 </div>
             </div>

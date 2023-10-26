@@ -85,7 +85,5 @@ namespace PersonalSoulBlog.Controllers
             await _accountService.Logout();
             return RedirectToAction("Index", "Article");   
         }
-
-
     }
 }

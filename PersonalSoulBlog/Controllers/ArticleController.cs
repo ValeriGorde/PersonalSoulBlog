@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PersonalSoulBlog.DAL.Data;
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.ViewModels.Articles;
@@ -105,7 +104,7 @@ namespace PersonalSoulBlog.Controllers
             if (article != null)
                 return View(article);
 
-            return NotFound();
+            return View("NotFound");
         }
 
         [HttpPost]
@@ -124,8 +123,7 @@ namespace PersonalSoulBlog.Controllers
                     return RedirectToAction("View", "Article", new { id = model.ArticleId });
             }
 
-            // поменять статус код
-            return StatusCode(400);
+            return View("SmthGoesWrong");
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using PersonalSoulBlog.DAL.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalSoulBlog.DAL.Data;
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.DAL.Models.Repositories.Interfaces;
 using System;
@@ -13,6 +14,13 @@ namespace PersonalSoulBlog.DAL.Models.Repositories
     {
         public CommentRepository(ApplicationDbContext context) : base(context)
         {
+        }
+
+        public async Task<List<Comment>> GetAllComments()
+        {
+            return await _context.Comments
+                 .Include(u => u.User)
+                 .ToListAsync();
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.Article>
+﻿﻿@using Microsoft.AspNetCore.Identity;
+@using PersonalSoulBlog.DAL.Models.Entities;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.Article>
 @{
     ViewData["Title"] = "Index";
 }
@@ -11,11 +15,14 @@
 
 <div class="conteiner p-3">
     <div class="row pt-4">
-        <div class="col-7">
-            <h3 class="text-primary">Начните писать статью уже сейчас</h3>
-            <a asp-controller="Article" asp-action="Create">
-                <i class="bi bi-plus-circle"></i> &nbsp; Создать новую статью
-            </a>
+        <div class="text-center">
+            <h4 class="text-primary">Зарегистрируйтесь и начните писать статьи уже сейчас!</h4>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a asp-controller="Article" asp-action="Create">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Создать новую статью
+                </a>
+            }            
         </div>
     </div>
 </div>
@@ -37,12 +44,16 @@
                             }
                         </h6>
                         <p class="card-text">@item.User</p>
-                        <div class="btn-group" role="group">
-                            <a asp-controller="Article" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
-                            <form asp-controller="Article" asp-action="Delete" method="post" asp-route-id="@item.Id">
-                                <button type="submit" class="btn btn-danger ms-3">Удалить</button>
-                            </form>
-                        </div>
+
+                        @if(User.IsInRole("Администратор") || User.IsInRole("Модератор") || User.Identity.Name == item.User.Email)
+                        {
+                            <div class="btn-group" role="group">
+                                <a asp-controller="Article" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
+                                <form asp-controller="Article" asp-action="Delete" method="post" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-danger ms-3">Удалить</button>
+                                </form>
+                            </div>
+                        }                        
                     </div>
                 </div>
             </div>

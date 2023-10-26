@@ -34,9 +34,9 @@ namespace PersonalSoulBlog.DAL.Models.Repositories.Interfaces
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<T>> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<T> GetById(Guid id)

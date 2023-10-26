@@ -55,7 +55,7 @@ namespace PersonalSoulBlog.Services.Contracts
 
         public async Task<List<Comment>> GetAllComments()
         {
-            return await _commentRepo.GetAll();
+            return await _commentRepo.GetAllComments();
         }
 
         public async Task<EditCommentRequest> GetCommentById(Guid id)

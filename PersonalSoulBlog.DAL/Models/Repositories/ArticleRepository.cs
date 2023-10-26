@@ -29,8 +29,8 @@ namespace PersonalSoulBlog.DAL.Models.Repositories
         {
             return await _context.Articles
                 .Include(t => t.Tags)
-                .Include(u => u.User)
                 .Include(c => c.Comments)
+                .Include(u => u.User)
                 .FirstOrDefaultAsync(a => a.Id == id) ?? throw new Exception($"Статья с id: {id} не найдена");
         }
     }

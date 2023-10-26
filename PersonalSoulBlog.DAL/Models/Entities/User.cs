@@ -13,5 +13,6 @@ namespace PersonalSoulBlog.DAL.Models.Entities
 
         // у одного пользователя может быть несколько статей
         public List<Article> Articles { get; set; } = new List<Article>();
+        public List<Tag> Tags { get; set; } = new List<Tag>();
     }
 }

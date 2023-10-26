@@ -1,4 +1,6 @@
-﻿namespace PersonalSoulBlog.ViewModels.Comments
+﻿using PersonalSoulBlog.DAL.Models.Entities;
+
+namespace PersonalSoulBlog.ViewModels.Comments
 {
     /// <summary>
     /// Запрос для создания комментария
@@ -6,5 +8,7 @@
     public class CreateCommentRequest
     {
         public string Text { get; set; }
+        public User? User { get; set; }
+        public Guid ArticleId { get; set; }
     }
 }

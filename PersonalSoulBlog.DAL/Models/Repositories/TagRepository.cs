@@ -17,10 +17,11 @@ namespace PersonalSoulBlog.DAL.Models.Repositories
         {
             
         }
-        public async Task<List<Tag>> GetAll()
+        public async Task<List<Tag>> GetAllTags()
         {
             return await _context.Tags
                  .Include(a => a.Articles)
+                 .Include(u => u.User)
                  .ToListAsync();
         }
     }

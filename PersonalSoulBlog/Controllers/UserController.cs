@@ -69,8 +69,12 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string? id)
         {
-            await _userService.DeleteUser(id);
-            return RedirectToAction("Index");
+            if(id != null)
+            {
+                await _userService.DeleteUser(id);
+                return RedirectToAction("Index");
+            }
+            return View("SmthGoesWrong");           
         }
     }
 }

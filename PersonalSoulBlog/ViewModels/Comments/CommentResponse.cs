@@ -1,5 +1,6 @@
 ﻿using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.ViewModels.Articles;
+using PersonalSoulBlog.ViewModels.Users;
 
 namespace PersonalSoulBlog.ViewModels.Comments
 {

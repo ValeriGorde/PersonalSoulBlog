@@ -49,7 +49,7 @@ namespace PersonalSoulBlog.Services.Contracts
 
         public async Task<CreateArticelRequest> Create()
         {
-            var tags = await _tagRepo.GetAll(); ;
+            var tags = await _tagRepo.GetAllTags(); ;
             var allTags = _mapper.Map<List<TagForArticleRequest>>(tags);
 
             return new CreateArticelRequest
@@ -85,7 +85,7 @@ namespace PersonalSoulBlog.Services.Contracts
                 var newArticle = _mapper.Map<ArticleResponse>(article);
                 newArticle.Tags.Clear();
 
-                var allTags = await _tagRepo.GetAll();
+                var allTags = await _tagRepo.GetAllTags();
 
                 foreach (var tag in allTags)
                 {
