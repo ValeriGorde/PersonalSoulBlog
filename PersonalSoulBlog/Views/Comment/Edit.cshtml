@@ -1,0 +1,21 @@
+﻿@model PersonalSoulBlog.ViewModels.Comments.EditCommentRequest
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-md-6 offset-md-3">
+            <form method="POST">
+                <legend>Редактирование комментария</legend>
+                <div class="mb-3">
+                    <label for="text" class="form-label">Название</label>
+                    <input asp-for="Text" type="text" class="form-control" id="text" />
+                </div>
+                <button type="submit" class="btn btn-primary">Изменить</button>
+                <div class="mb-3 mt-3">
+                    <a asp-controller="Article" asp-action="View">Вернуться к статье</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>

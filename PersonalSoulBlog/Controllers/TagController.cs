@@ -101,8 +101,6 @@ namespace PersonalSoulBlog.Controllers
             }
 
             return View(result);
-        }
-
-        
+        }        
     }
 }

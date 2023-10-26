@@ -17,24 +17,31 @@
         <p class="fw-bold text-end">Автор статьи: @Model.Author.Email</p>
 
 
-
-        
-
         @if (Model.Comments.Count != 0)
         {
             <p>Комментарии к статье:</p>
 
             @foreach (var comment in Model.Comments)
             {
-                <div>
-                    <div class="card border-info mb-2">
-                        <div class="row-1 ps-3">
+                <div class="card border-info mb-2">
+                    <div class="row-1 ps-3 d-flex justify-content-between">
+                        <div>
                             <p>@comment.Text</p>
-                            <p class="badge rounded-pill text-bg-success" style="color:lightgreen">@comment.User.Email</p>
+                            <p class="badge rounded-pill bg-info">@comment.User.Email</p>
+                        </div>
+                        <div>
+                            <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-outline-primary" type="button">Редактировать</a>
+                            <form asp-controller="Comment" asp-action="Delete" method="post" asp-route-id="@comment.Id">
+                                <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             }
+        }
+        else
+        {
+            <p>Оставьте первый комментарий к статье!</p>
         }
 
         <div class="container">
@@ -54,8 +61,8 @@
                         <button class="btn btn-secondary" type="submit">Отправить</button>
                     </div>
                 </form>
-            </div>            
-        </div>      
+            </div>
+        </div>
 
     </div>
 </div>

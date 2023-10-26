@@ -35,7 +35,8 @@ builder.Services
     .AddScoped<IRoleService, RoleService>()
     .AddScoped<IUserService, UserService>()
     .AddScoped<ITagService, TagService>()
-    .AddScoped<IArticleService, ArticleService>();
+    .AddScoped<IArticleService, ArticleService>()
+    .AddScoped<ICommentService, CommentService>();
 
 // Подключаем маппинг
 var mappingConfig = new MapperConfiguration(mc =>

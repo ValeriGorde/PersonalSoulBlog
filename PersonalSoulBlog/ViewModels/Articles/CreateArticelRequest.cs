@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PersonalSoulBlog.DAL.Models.Entities;
+﻿using PersonalSoulBlog.DAL.Models.Entities;
 
 namespace PersonalSoulBlog.ViewModels.Articles
 {

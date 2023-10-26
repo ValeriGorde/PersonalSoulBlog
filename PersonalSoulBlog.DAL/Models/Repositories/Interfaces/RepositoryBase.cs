@@ -34,7 +34,7 @@ namespace PersonalSoulBlog.DAL.Models.Repositories.Interfaces
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<T>> GetAllTags()
+        public Task<List<T>> GetAll()
         {
             throw new NotImplementedException();
         }

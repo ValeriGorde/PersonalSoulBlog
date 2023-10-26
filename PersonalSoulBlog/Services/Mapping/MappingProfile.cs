@@ -40,6 +40,8 @@ namespace PersonalSoulBlog.Services.Mapping
                 .ForMember(x => x.Author, opt => opt.MapFrom(c => c.User)).ReverseMap();
 
             CreateMap<Comment, CommentResponse>().ReverseMap();
+            CreateMap<Comment, EditCommentRequest>().ReverseMap();
+            CreateMap<Comment, CreateCommentRequest>().ReverseMap();
         }
     }
 }

@@ -12,6 +12,6 @@ namespace PersonalSoulBlog.DAL.Models.Repositories.Interfaces
     /// </summary>
     public interface ITagRepository: IRepository<Tag>
     {
-        Task<List<Tag>> GetAllTags();
+        Task<List<Tag>> GetAll();
     }
 }

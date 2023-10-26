@@ -39,7 +39,7 @@ namespace PersonalSoulBlog.Services.ControllersServices
 
         public async Task<List<Tag>> GetAllTags()
         {
-            return await _tagRepo.GetAllTags();
+            return await _tagRepo.GetAll();
         }
 
         public async Task<EditTagRequest> GetTagById(Guid id)

@@ -121,7 +121,7 @@ namespace PersonalSoulBlog.Controllers
                 var result = await _articleService.AddComment(model);
 
                 if(result)
-                    return RedirectToAction("View", "Article", new { id = model.ArticleId }); ;
+                    return RedirectToAction("View", "Article", new { id = model.ArticleId });
             }
 
             // поменять статус код
