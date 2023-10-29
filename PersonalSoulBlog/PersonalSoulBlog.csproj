@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PersonalSoulBlog.BLL\PersonalSoulBlog.BLL.csproj" />
     <ProjectReference Include="..\PersonalSoulBlog.DAL\PersonalSoulBlog.DAL.csproj" />
   </ItemGroup>
 

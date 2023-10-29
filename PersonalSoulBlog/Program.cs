@@ -6,21 +6,21 @@ using PersonalSoulBlog.DAL.Data.DefaultData;
 using PersonalSoulBlog.DAL.Models.Entities;
 using PersonalSoulBlog.DAL.Models.Repositories.Interfaces;
 using PersonalSoulBlog.DAL.Models.Repositories;
-using PersonalSoulBlog.Services.Contracts;
-using PersonalSoulBlog.Services.Contracts.Interfaces;
-using PersonalSoulBlog.Services.ControllersServices;
-using PersonalSoulBlog.Services.Mapping;
 using NLog;
 using NLog.Web;
+using PersonalSoulBlog.BLL.Services.Contracts.Interfaces;
+using PersonalSoulBlog.BLL.Services.Contracts;
+using PersonalSoulBlog.BLL.Services.ControllersServices;
+using PersonalSoulBlog.BLL.Services.Mapping;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
-logger.Debug("init main");
+logger.Debug("init PersonalSoulBlog");
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
+    // Добавляем сервисы в контроллер
     builder.Services.AddControllersWithViews();
 
     // Добавление контекста для связи с БД

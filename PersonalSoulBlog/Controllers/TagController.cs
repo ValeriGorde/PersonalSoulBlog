@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PersonalSoulBlog.BLL.Services.Contracts.Interfaces;
+using PersonalSoulBlog.BLL.ViewModels.Tags;
 using PersonalSoulBlog.DAL.Models.Entities;
-using PersonalSoulBlog.Services.Contracts.Interfaces;
-using PersonalSoulBlog.ViewModels.Tags;
 
 namespace PersonalSoulBlog.Controllers
 {

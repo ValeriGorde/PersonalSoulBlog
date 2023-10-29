@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PersonalSoulBlog.Services.Contracts.Interfaces;
-using PersonalSoulBlog.ViewModels.Roles;
+using PersonalSoulBlog.BLL.Services.Contracts.Interfaces;
+using PersonalSoulBlog.BLL.ViewModels.Roles;
 
 namespace PersonalSoulBlog.Controllers
 {

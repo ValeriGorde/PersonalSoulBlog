@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PersonalSoulBlog.BLL.Services.Contracts.Interfaces;
+using PersonalSoulBlog.BLL.ViewModels.Articles;
+using PersonalSoulBlog.BLL.ViewModels.Comments;
 using PersonalSoulBlog.DAL.Models.Entities;
-using PersonalSoulBlog.Services.Contracts.Interfaces;
-using PersonalSoulBlog.ViewModels.Articles;
-using PersonalSoulBlog.ViewModels.Comments;
 
 namespace PersonalSoulBlog.Controllers
 {
@@ -157,7 +157,7 @@ namespace PersonalSoulBlog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddComment(CommentResponse model)
+        public async Task<IActionResult> AddComment(CommentView model)
         {
             try
             {

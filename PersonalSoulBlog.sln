@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalSoulBlog", "Persona
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalSoulBlog.DAL", "PersonalSoulBlog.DAL\PersonalSoulBlog.DAL.csproj", "{DB7FCFDF-D5B3-4318-A445-A4B134D26AB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalSoulBlog.BLL", "PersonalSoulBlog.BLL\PersonalSoulBlog.BLL.csproj", "{BD17C587-E6D8-4B65-B399-849A14F39E46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PesonalSoulBlog.API", "PesonalSoulBlog.API\PesonalSoulBlog.API.csproj", "{0851572E-4C58-45B9-B9B0-67B62BCB2EB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DB7FCFDF-D5B3-4318-A445-A4B134D26AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB7FCFDF-D5B3-4318-A445-A4B134D26AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB7FCFDF-D5B3-4318-A445-A4B134D26AB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD17C587-E6D8-4B65-B399-849A14F39E46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD17C587-E6D8-4B65-B399-849A14F39E46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD17C587-E6D8-4B65-B399-849A14F39E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD17C587-E6D8-4B65-B399-849A14F39E46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0851572E-4C58-45B9-B9B0-67B62BCB2EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0851572E-4C58-45B9-B9B0-67B62BCB2EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0851572E-4C58-45B9-B9B0-67B62BCB2EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0851572E-4C58-45B9-B9B0-67B62BCB2EB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
