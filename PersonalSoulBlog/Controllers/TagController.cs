@@ -11,11 +11,14 @@ namespace PersonalSoulBlog.Controllers
     {
         private readonly ITagService _tagService;
         private readonly UserManager<User> _userManager;
+        private readonly ILogger<TagController> _logger;
 
-        public TagController(ITagService tagService, UserManager<User> userManager)
+        public TagController(ITagService tagService, UserManager<User> userManager,
+            ILogger<TagController> logger)
         {
             _tagService = tagService;
             _userManager = userManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -43,17 +46,26 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateTagRequest model)
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            if (currentUser != null)
-                model.User = currentUser;
-
-            if (ModelState.IsValid)
+            try
             {
-                await _tagService.CreateTag(model);
-                return RedirectToAction("Index");
-            }
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                    model.User = currentUser;
 
-            return View(model);
+                if (ModelState.IsValid)
+                {
+                    await _tagService.CreateTag(model);
+                    return RedirectToAction("Index");
+                }
+
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         /// <summary>
@@ -63,14 +75,23 @@ namespace PersonalSoulBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var tag = await _tagService.GetTagById(id);
-
-            if(tag != null)
+            try
             {
-                return View(tag);
-            }
+                var tag = await _tagService.GetTagById(id);
 
-            return RedirectToAction("Index");
+                if (tag != null)
+                {
+                    return View(tag);
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         /// <summary>
@@ -80,17 +101,26 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditTagRequest model)
         {
-            if(ModelState.IsValid)
+            try
             {
-                var result = await _tagService.UpdateTag(model);
-
-                if (result)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index");
-                }
-            }
+                    var result = await _tagService.UpdateTag(model);
 
-            return View(model);
+                    if (result)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+           
         }
 
         /// <summary>

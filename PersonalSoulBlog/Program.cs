@@ -10,81 +10,99 @@ using PersonalSoulBlog.Services.Contracts;
 using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.Services.ControllersServices;
 using PersonalSoulBlog.Services.Mapping;
+using NLog;
+using NLog.Web;
 
-var builder = WebApplication.CreateBuilder(args);
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+logger.Debug("init main");
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-// Добавление контекста для связи с БД
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-
-// Регистрация зависимостей репозиториев
-builder.Services
-    .AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>))
-    .AddScoped<ITagRepository, TagRepository>()
-    .AddScoped<IArticleRepository, ArticleRepository>()
-    .AddScoped<ICommentRepository, CommentRepository>();
-
-
-// Подключаем сервисы
-builder.Services
-    .AddScoped<IAccountService, AccountService>()
-    .AddScoped<IRoleService, RoleService>()
-    .AddScoped<IUserService, UserService>()
-    .AddScoped<ITagService, TagService>()
-    .AddScoped<IArticleService, ArticleService>()
-    .AddScoped<ICommentService, CommentService>();
-
-// Подключаем маппинг
-var mappingConfig = new MapperConfiguration(mc =>
+try
 {
-    mc.AddProfile(new MappingProfile());
-});
-IMapper mapper = mappingConfig.CreateMapper();
-builder.Services.AddSingleton(mapper);
+    var builder = WebApplication.CreateBuilder(args);
 
-// Добавление сервисов Identity
-builder.Services.AddIdentity<User, Role>(opts =>
+    // Add services to the container.
+    builder.Services.AddControllersWithViews();
+
+    // Добавление контекста для связи с БД
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
+
+    // Регистрация зависимостей репозиториев
+    builder.Services
+        .AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>))
+        .AddScoped<ITagRepository, TagRepository>()
+        .AddScoped<IArticleRepository, ArticleRepository>()
+        .AddScoped<ICommentRepository, CommentRepository>();
+
+
+    // Подключаем сервисы
+    builder.Services
+        .AddScoped<IAccountService, AccountService>()
+        .AddScoped<IRoleService, RoleService>()
+        .AddScoped<IUserService, UserService>()
+        .AddScoped<ITagService, TagService>()
+        .AddScoped<IArticleService, ArticleService>()
+        .AddScoped<ICommentService, CommentService>();
+
+    // Подключаем маппинг
+    var mappingConfig = new MapperConfiguration(mc =>
+    {
+        mc.AddProfile(new MappingProfile());
+    });
+    IMapper mapper = mappingConfig.CreateMapper();
+    builder.Services.AddSingleton(mapper);
+
+    // Добавление сервисов Identity
+    builder.Services.AddIdentity<User, Role>(opts =>
+    {
+        opts.Password.RequiredLength = 5;
+        opts.Password.RequireNonAlphanumeric = false;
+        opts.Password.RequireLowercase = false;
+        opts.Password.RequireUppercase = false;
+        opts.Password.RequireDigit = false;
+    }).AddRoles<Role>()
+    .AddRoleManager<RoleManager<Role>>()
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+    var app = builder.Build();
+
+    // Добавление пользователей и ролей по умолчанию в БД
+    var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    await SeedData.EnsureSeedData(scope.ServiceProvider);
+
+
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Home/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+
+    app.UseRouting();
+
+    // Добавление аутентификации
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Article}/{action=Index}/{id?}");
+
+    app.Run();
+}
+catch(Exception ex)
 {
-    opts.Password.RequiredLength = 5;
-    opts.Password.RequireNonAlphanumeric = false;
-    opts.Password.RequireLowercase = false;
-    opts.Password.RequireUppercase = false;
-    opts.Password.RequireDigit = false;
-}).AddRoles<Role>()
-.AddRoleManager<RoleManager<Role>>()
-.AddDefaultTokenProviders()
-.AddEntityFrameworkStores<ApplicationDbContext>();
-
-var app = builder.Build();
-
-// Добавление пользователей и ролей по умолчанию в БД
-var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
-await SeedData.EnsureSeedData(scope.ServiceProvider);
-
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+    logger.Error(ex);
+}
+finally
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    LogManager.Shutdown();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
 
-app.UseRouting();
-
-// Добавление аутентификации
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Article}/{action=Index}/{id?}");
-
-app.Run();

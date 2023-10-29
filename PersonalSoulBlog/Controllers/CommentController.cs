@@ -9,10 +9,12 @@ namespace PersonalSoulBlog.Controllers
     public class CommentController : Controller
     {
         private readonly ICommentService _commentService;
+        private readonly ILogger<CommentController> _logger;
 
-        public CommentController(ICommentService commentService)
+        public CommentController(ICommentService commentService, ILogger<CommentController> logger)
         {
             _commentService = commentService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -29,15 +31,22 @@ namespace PersonalSoulBlog.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Edit(Guid id)
         {
-            var comment = await _commentService.GetCommentById(id);
-
-            if (comment != null)
+            try
             {
-                return View(comment);
-            }
+                var comment = await _commentService.GetCommentById(id);
 
-            // тут ошибку добавить
-            return RedirectToAction("View", "Article");
+                if (comment != null)
+                {
+                    return View(comment);
+                }
+
+                return View("SmthGoesWrong");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }            
         }
 
         /// <summary>
@@ -47,18 +56,26 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditCommentRequest model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var articleId = await _commentService.UpdateComment(model);
-
-                if (articleId != Guid.Empty)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("View", "Article", new { id = articleId });
-                }
-            }
+                    var articleId = await _commentService.UpdateComment(model);
 
-            // ошибку обработать
-            return View("Edit", "Comment");
+                    if (articleId != Guid.Empty)
+                    {
+                        return RedirectToAction("View", "Article", new { id = articleId });
+                    }
+                }
+
+                return View("SmthGoesWrong");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         /// <summary>

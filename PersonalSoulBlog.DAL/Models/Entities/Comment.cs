@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace PersonalSoulBlog.DAL.Models.Entities
 {
     public class Comment : BaseModel
     {
+        [Required(ErrorMessage = "Поле текста является обязательным")]
+        [Display(Name = "Текст")]
         public string Text { get; set; }
 
         // привязка комментария к пользователю

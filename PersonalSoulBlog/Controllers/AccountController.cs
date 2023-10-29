@@ -7,10 +7,13 @@ namespace PersonalSoulBlog.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
         {
             _accountService = accountService;
+            _logger = logger;
+            _logger.LogDebug("NLog встроен в AccountController");
         }
 
         [HttpGet]
@@ -27,20 +30,31 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest model)
         {
-            var result = await _accountService.Register(model);
-            if (result.Success)
+            try
             {
-                return RedirectToAction("Login");
-            }
-            else
-            {
-                foreach(var error in result.Errors)
+                var result = await _accountService.Register(model);
+                if (result.Success)
                 {
-                    ModelState.AddModelError("", error);
+                    return RedirectToAction("Login");
                 }
-            }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
 
-            return View(model);
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                // ошибка на стороне сервера
+                return StatusCode(500);
+            }
+            
         }
 
         [HttpGet]
@@ -59,18 +73,27 @@ namespace PersonalSoulBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginRequest model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var returnUrl = Url.Action("Index", "Article"); ;
-                var result = await _accountService.Login(model, returnUrl);
-                if (result.Success)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index", "Article");
+                    var returnUrl = Url.Action("Index", "Article"); ;
+                    var result = await _accountService.Login(model, returnUrl);
+                    if (result.Success)
+                    {
+                        return RedirectToAction("Index", "Article");
+                    }
+                    else
+                        ModelState.AddModelError("", result.ErrorMessage);
                 }
-                else
-                    ModelState.AddModelError("", result.ErrorMessage);
+                return View(model);
             }
-            return View(model);
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         /// <summary>

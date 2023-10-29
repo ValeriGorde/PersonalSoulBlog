@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PersonalSoulBlog.Services.Contracts.Interfaces;
 using PersonalSoulBlog.ViewModels.Users;
+using System.Security.Cryptography;
 
 namespace PersonalSoulBlog.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -48,17 +51,26 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditUserRequest model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _userService.UpdateUser(model);
-
-                if (result)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index");
-                }
-            }
+                    var result = await _userService.UpdateUser(model);
 
-            return View(model);
+                    if (result)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         /// <summary>

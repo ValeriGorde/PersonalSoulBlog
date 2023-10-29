@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalSoulBlog.DAL.Models.Entities
 {
-    // Модель статьи
+    /// <summary>
+    /// Модель статьи
+    /// </summary>
     public class Article : BaseModel
     {
+        [Required(ErrorMessage = "Поле имени является обязательным")]
+        [Display(Name = "Заголовок")]
         public string Title { get; set; }
+
+        [Required(ErrorMessage = "Поле содержания является обязательным")]
+        [Display(Name = "Содержание статьи")]
         public string Description { get; set; }
 
         // привязка статьи к пользователю

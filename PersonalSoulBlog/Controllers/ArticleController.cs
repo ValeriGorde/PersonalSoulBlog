@@ -11,11 +11,15 @@ namespace PersonalSoulBlog.Controllers
     {
         private readonly IArticleService _articleService;
         private readonly UserManager<User> _userManager;
+        private readonly ILogger<ArticleController> _logger;
 
-        public ArticleController(IArticleService articleService, UserManager<User> userManager)
+        public ArticleController(IArticleService articleService, UserManager<User> userManager, 
+            ILogger<ArticleController> logger)
         {
             _articleService = articleService;
             _userManager = userManager;
+            _logger = logger;
+            _logger.LogDebug("NLog встроен в ArticleController");
         }
 
 
@@ -36,51 +40,87 @@ namespace PersonalSoulBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = await _articleService.Create();
+            try
+            {
+                var model = await _articleService.Create();
 
-            return View(model);
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateArticelRequest model)
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            if (currentUser != null)
-                model.User = currentUser;
-
-            if (ModelState.IsValid)
+            try
             {
-                await _articleService.Create(model);
-                return RedirectToAction("Index");
-            }
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                    model.User = currentUser;
 
-            return View(model);
+                if (ModelState.IsValid)
+                {
+                    await _articleService.Create(model);
+                    return RedirectToAction("Index");
+                }
+
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var article = await _articleService.GetArticleById(id);
-
-            if (article != null)
+            try
             {
-                return View(article);
-            }
+                var article = await _articleService.GetArticleById(id);
 
-            return RedirectToAction("Index");
+                if (article != null)
+                {
+                    return View(article);
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(EditArticleRequest model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _articleService.Update(model);
-                if (result)
-                    return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    var result = await _articleService.Update(model);
+                    if (result)
+                        return RedirectToAction("Index");
+                }
+                return View(model);
             }
-            return View(model);
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         [HttpPost]
@@ -99,31 +139,47 @@ namespace PersonalSoulBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> View(Guid id)
         {
-            var article = await _articleService.View(id);
+            try
+            {
+                var article = await _articleService.View(id);
 
-            if (article != null)
-                return View(article);
+                if (article != null)
+                    return View(article);
 
-            return View("NotFound");
+                return View("NotFound");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         [HttpPost]
         public async Task<IActionResult> AddComment(CommentResponse model)
         {
-            // потом перенести в сервис 
-            var currentUser = await _userManager.GetUserAsync(User);
-            if (currentUser != null)
-                model.User = currentUser;
-
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _articleService.AddComment(model);
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                    model.User = currentUser;
 
-                if(result)
-                    return RedirectToAction("View", "Article", new { id = model.ArticleId });
+                if (ModelState.IsValid)
+                {
+                    var result = await _articleService.AddComment(model);
+
+                    if (result)
+                        return RedirectToAction("View", "Article", new { id = model.ArticleId });
+                }
+
+                return View("SmthGoesWrong");
             }
-
-            return View("SmthGoesWrong");
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }            
         }
 
     }

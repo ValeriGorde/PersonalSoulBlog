@@ -8,10 +8,12 @@ namespace PersonalSoulBlog.Controllers
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;
+        private readonly ILogger<RoleController> _logger;
 
-        public RoleController(IRoleService roleService)
+        public RoleController(IRoleService roleService, ILogger<RoleController> logger)
         {
             _roleService = roleService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -46,16 +48,25 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoleRequest model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _roleService.CreateRole(model);
-                if (result)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index");
+                    var result = await _roleService.CreateRole(model);
+                    if (result)
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
-            }            
 
-            return View(model);
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         /// <summary>
@@ -83,16 +94,25 @@ namespace PersonalSoulBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditRoleRequest model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _roleService.EditRole(model);
-                if (result)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index");
+                    var result = await _roleService.EditRole(model);
+                    if (result)
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
-            }     
 
-            return View(model);
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500);
+            }
+            
         }
 
         /// <summary>

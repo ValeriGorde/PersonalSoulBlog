@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalSoulBlog.DAL.Models.Entities
 {
@@ -7,6 +8,8 @@ namespace PersonalSoulBlog.DAL.Models.Entities
     /// </summary>
     public class Tag : BaseModel
     {
+        [Required(ErrorMessage = "Поле наименование является обязательным")]
+        [Display(Name = "Наименование")]
         public string Name { get; set; }
 
         // привязка тега к пользователю
