@@ -22,7 +22,7 @@
                 <a asp-controller="Article" asp-action="Create">
                     <i class="bi bi-plus-circle"></i> &nbsp; Создать новую статью
                 </a>
-            }            
+            }
         </div>
     </div>
 </div>
@@ -45,7 +45,7 @@
                         </h6>
                         <p class="card-text">@item.User</p>
 
-                        @if(User.IsInRole("Администратор") || User.IsInRole("Модератор") || User.Identity.Name == item.User.Email)
+                        @if (User.IsInRole("Администратор"))
                         {
                             <div class="btn-group" role="group">
                                 <a asp-controller="Article" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
@@ -53,7 +53,7 @@
                                     <button type="submit" class="btn btn-danger ms-3">Удалить</button>
                                 </form>
                             </div>
-                        }                        
+                        }
                     </div>
                 </div>
             </div>

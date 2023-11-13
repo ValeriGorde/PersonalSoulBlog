@@ -5,7 +5,7 @@
 @model IEnumerable<PersonalSoulBlog.DAL.Models.Entities.Tag>
 @{
     ViewData["Title"] = "Index";
-}
+
 
 <div class="conteiner p-3">
     <div class="row pt-4">
@@ -19,8 +19,6 @@
             }            
         </div>
     </div>
-    <br /> <br />
-
 </div>
 
 <div class="container">
@@ -32,18 +30,19 @@
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>
                         <p class="card-text">Статей по тегу: @item.Articles.Count</p>
-                        @if (User.Identity.Name == item.User.Email || User.IsInRole("Администратор"))
-                        {
-                            <div class="btn-group" role="group">
-                                <a asp-controller="Tag" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
-                                <form asp-controller="Tag" asp-action="Delete" method="post" asp-route-id="@item.Id">
-                                    <button type="submit" class="btn btn-danger ms-3">Удалить</button>
-                                </form>
-                            </div>
-                        }
+                        @if (User.IsInRole("Администратор"))
+                            {
+                                <div class="btn-group" role="group">
+                                    <a asp-controller="Tag" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Редактировать</a>
+                                    <form asp-controller="Tag" asp-action="Delete" method="post" asp-route-id="@item.Id">
+                                        <button type="submit" class="btn btn-danger ms-3">Удалить</button>
+                                    </form>
+                                </div>
+                            }
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+}

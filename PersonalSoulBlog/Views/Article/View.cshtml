@@ -34,15 +34,15 @@
                             <p class="badge rounded-pill bg-info">@comment.User.Email</p>
                         </div>
 
-                        @if(User.IsInRole("Администратор") || User.IsInRole("Модератор") || User.Identity.Name == comment.User.Email)
-                        {
+                        @* @if(User.IsInRole("Администратор") || User.IsInRole("Модератор") || User.Identity.Name == comment.User.Email)
+                        { *@
                             <div>
                                 <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-outline-primary" type="button">Редактировать</a>
                                 <form asp-controller="Comment" asp-action="Delete" method="post" asp-route-id="@comment.Id">
                                     <button type="submit" class="btn btn-outline-danger">Удалить</button>
                                 </form>
                             </div>
-                        }                        
+                                              
                     </div>
                 </div>
             }

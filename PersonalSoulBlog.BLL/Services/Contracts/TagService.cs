@@ -39,8 +39,9 @@ namespace PersonalSoulBlog.BLL.Services.ControllersServices
 
         public async Task<List<Tag>> GetAllTags()
         {
-            return await _tagRepo.GetAll();
+            return await _tagRepo.GetAllTags();
         }
+
 
         public async Task<EditTagRequest> GetTagById(Guid id)
         {
